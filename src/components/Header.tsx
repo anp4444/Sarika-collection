@@ -61,12 +61,25 @@ export default function Header() {
           </a>
         </nav>
 
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden p-2 text-[#3b1c17] hover:bg-[#f4e6d2] rounded-lg"
-        >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="md:hidden flex items-center gap-1">
+          <Link
+            href="/cart"
+            className="relative p-2 text-[#3b1c17] hover:text-[#941424] hover:bg-[#f4e6d2] rounded-lg transition-all"
+          >
+            <ShoppingCart size={22} />
+            {totalItems > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 bg-[#941424] text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                {totalItems > 9 ? '9+' : totalItems}
+              </span>
+            )}
+          </Link>
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="md:hidden p-2 text-[#3b1c17] hover:bg-[#f4e6d2] rounded-lg"
+          >
+            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {mobileOpen && (
