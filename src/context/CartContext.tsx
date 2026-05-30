@@ -28,8 +28,11 @@ type CartContextType = {
 const CartContext = createContext<CartContextType | null>(null);
 const STORAGE_KEY = 'sarikacollection_cart';
 
-function loadCart(): CartItem[] {
-  if (typeof window === 'undefined') return [];
+function saveItems(items: CartItem[]) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch {}
+}
+
+function loadItems(): CartItem[] {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     return stored ? JSON.parse(stored) : [];
@@ -39,13 +42,16 @@ function loadCart(): CartItem[] {
 }
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>(loadCart);
+  const [items, setItems] = useState<CartItem[]>(loadItems);
   const [toast, setToast] = useState<Toast>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout>>(null);
+  const hydrated = useRef(false);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  }, [items]);
+    hydrated.current = true;
+    const stored = loadItems();
+    if (stored.length) setItems(stored);
+  }, []);
 
   const showToast = useCallback((message: string) => {
     if (toastTimer.current) clearTimeout(toastTimer.current);
@@ -56,38 +62,48 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const addItem = useCallback((product: Product, qty = 1) => {
     setItems((prev) => {
       const existing = prev.find((i) => i.slug === product.slug);
-      if (existing) {
-        return prev.map((i) =>
-          i.slug === product.slug ? { ...i, quantity: i.quantity + qty } : i
-        );
-      }
-      return [
-        ...prev,
-        {
-          id: product.id,
-          slug: product.slug,
-          name: product.name,
-          price: product.price,
-          mrp: product.mrp,
-          image: product.images[0],
-          quantity: qty,
-        },
-      ];
+      const next = existing
+        ? prev.map((i) => (i.slug === product.slug ? { ...i, quantity: i.quantity + qty } : i))
+        : [
+            ...prev,
+            {
+              id: product.id,
+              slug: product.slug,
+              name: product.name,
+              price: product.price,
+              mrp: product.mrp,
+              image: product.images[0],
+              quantity: qty,
+            },
+          ];
+      saveItems(next);
+      return next;
     });
     showToast(`${product.name} added to cart!`);
   }, [showToast]);
 
   const removeItem = useCallback((slug: string) => {
-    setItems((prev) => prev.filter((i) => i.slug !== slug));
+    setItems((prev) => {
+      const next = prev.filter((i) => i.slug !== slug);
+      saveItems(next);
+      return next;
+    });
   }, []);
 
   const updateQuantity = useCallback((slug: string, quantity: number) => {
-    setItems((prev) =>
-      prev.map((i) => (i.slug === slug ? { ...i, quantity: Math.max(1, quantity) } : i))
-    );
+    setItems((prev) => {
+      const next = prev.map((i) =>
+        i.slug === slug ? { ...i, quantity: Math.max(1, quantity) } : i
+      );
+      saveItems(next);
+      return next;
+    });
   }, []);
 
-  const clearCart = useCallback(() => setItems([]), []);
+  const clearCart = useCallback(() => {
+    setItems([]);
+    saveItems([]);
+  }, []);
 
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
   const subtotal = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
