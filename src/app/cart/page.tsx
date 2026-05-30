@@ -75,15 +75,17 @@ export default function CartPage() {
                   <div className="flex items-center justify-between mt-3">
                     <div className="flex items-center gap-2">
                       <button
+                        type="button"
                         onClick={() => updateQuantity(item.slug, item.quantity - 1)}
-                        className="w-8 h-8 flex items-center justify-center rounded-lg border border-[#e3d5c6] text-[#3b1c17] hover:bg-[#f4e6d2] transition-colors"
+                        className="w-8 h-8 flex items-center justify-center rounded-lg border border-[#e3d5c6] text-[#3b1c17] hover:bg-[#f4e6d2] transition-colors active:scale-90"
                       >
                         <Minus size={14} />
                       </button>
                       <span className="w-8 text-center font-semibold text-sm">{item.quantity}</span>
                       <button
+                        type="button"
                         onClick={() => updateQuantity(item.slug, item.quantity + 1)}
-                        className="w-8 h-8 flex items-center justify-center rounded-lg border border-[#e3d5c6] text-[#3b1c17] hover:bg-[#f4e6d2] transition-colors"
+                        className="w-8 h-8 flex items-center justify-center rounded-lg border border-[#e3d5c6] text-[#3b1c17] hover:bg-[#f4e6d2] transition-colors active:scale-90"
                       >
                         <Plus size={14} />
                       </button>
@@ -93,6 +95,7 @@ export default function CartPage() {
                         ₹{item.price * item.quantity}
                       </span>
                       <button
+                        type="button"
                         onClick={() => removeItem(item.slug)}
                         className="p-1.5 text-gray-400 hover:text-red-500 transition-colors"
                       >
@@ -104,6 +107,7 @@ export default function CartPage() {
               </div>
             ))}
             <button
+              type="button"
               onClick={clearCart}
               className="text-sm text-gray-400 hover:text-red-500 transition-colors"
             >

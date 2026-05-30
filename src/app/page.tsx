@@ -57,8 +57,9 @@ function HomeProductCard({ product }: { product: typeof products[0] }) {
           )}
         </div>
         <button
+          type="button"
           onClick={() => addItem(product)}
-          className="block w-full text-center bg-[#941424] hover:bg-[#6b0e1a] text-white text-sm font-semibold py-2.5 rounded-xl transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-2"
+          className="block w-full text-center bg-[#941424] hover:bg-[#6b0e1a] text-white text-sm font-semibold py-3 rounded-xl transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-2 active:scale-95"
         >
           <ShoppingCart size={16} />
           Add to Cart

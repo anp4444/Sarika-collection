@@ -143,15 +143,17 @@ export default function ProductDetailPage() {
                 <span className="text-sm text-gray-600 font-medium">Qty:</span>
                 <div className="flex items-center gap-1">
                   <button
+                    type="button"
                     onClick={() => setQty((q) => Math.max(1, q - 1))}
-                    className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#e3d5c6] text-[#3b1c17] hover:bg-[#f4e6d2] transition-colors"
+                    className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#e3d5c6] text-[#3b1c17] hover:bg-[#f4e6d2] transition-colors active:scale-90"
                   >
                     <Minus size={16} />
                   </button>
                   <span className="w-10 text-center font-semibold text-base">{qty}</span>
                   <button
+                    type="button"
                     onClick={() => setQty((q) => q + 1)}
-                    className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#e3d5c6] text-[#3b1c17] hover:bg-[#f4e6d2] transition-colors"
+                    className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#e3d5c6] text-[#3b1c17] hover:bg-[#f4e6d2] transition-colors active:scale-90"
                   >
                     <Plus size={16} />
                   </button>
@@ -160,8 +162,9 @@ export default function ProductDetailPage() {
             </div>
 
             <button
+              type="button"
               onClick={() => { addItem(product, qty); setQty(1); }}
-              className="w-full flex items-center justify-center gap-2 bg-[#941424] hover:bg-[#6b0e1a] text-white font-semibold py-3.5 px-4 rounded-xl transition-all text-base shadow-md hover:shadow-lg mb-4"
+              className="w-full flex items-center justify-center gap-2 bg-[#941424] hover:bg-[#6b0e1a] text-white font-semibold py-3.5 px-4 rounded-xl transition-all text-base shadow-md hover:shadow-lg mb-4 active:scale-95"
             >
               <ShoppingCart size={20} />
               Add to Cart — ₹{product.price * qty}

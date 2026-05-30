@@ -59,6 +59,7 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
 
         <button
+          type="button"
           onClick={() => addItem(product)}
           className="btn-primary w-full justify-center text-center text-sm"
         >
