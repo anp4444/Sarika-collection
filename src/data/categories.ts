@@ -55,4 +55,13 @@ export const categories: Category[] = [
     icon: '📦',
     itemCount: 10,
   },
+  {
+    id: 7,
+    slug: 'food-items',
+    name: 'Food Items',
+    description: 'Premium sweets, dry fruits, chocolates & festive treats',
+    image: 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=600&q=80',
+    icon: '🍬',
+    itemCount: 8
+  },
 ];
