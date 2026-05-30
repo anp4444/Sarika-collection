@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { Menu, X, ShoppingCart } from 'lucide-react';
 import { categories } from '@/data/categories';
 import { useCart } from '@/context/CartContext';
-import InstallButton from './InstallButton';
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -49,7 +48,6 @@ export default function Header() {
               </span>
             )}
           </Link>
-          <InstallButton />
           <a
             href="https://wa.me/919422703807"
             target="_blank"
@@ -75,7 +73,6 @@ export default function Header() {
               </span>
             )}
           </Link>
-          <InstallButton />
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="md:hidden p-2 text-[#3b1c17] hover:bg-[#f4e6d2] rounded-lg"
