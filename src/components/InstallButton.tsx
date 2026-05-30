@@ -5,8 +5,13 @@ import { Download } from 'lucide-react';
 
 export default function InstallButton() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {
+    if (window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone) {
+      setIsInstalled(true);
+      return;
+    }
     const handler = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e);
@@ -15,13 +20,15 @@ export default function InstallButton() {
     return () => window.removeEventListener('beforeinstallprompt', handler);
   }, []);
 
-  const handleInstall = () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => setDeferredPrompt(null));
+  const handleInstall = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const result = await deferredPrompt.userChoice;
+      setDeferredPrompt(null);
+    }
   };
 
-  if (!deferredPrompt) return null;
+  if (isInstalled) return null;
 
   return (
     <button

@@ -49,6 +49,7 @@ export default function Header() {
               </span>
             )}
           </Link>
+          <InstallButton />
           <a
             href="https://wa.me/919422703807"
             target="_blank"

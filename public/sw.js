@@ -1,19 +1,8 @@
 const CACHE = 'sarikacollection-v1';
+const ASSETS = ['/', '/about', '/contact', '/cart', '/manifest.json'];
 
 self.addEventListener('install', (e) => {
-  e.waitUntil(
-    caches.open(CACHE).then((cache) =>
-      cache.addAll([
-        '/',
-        '/about',
-        '/contact',
-        '/cart',
-        '/manifest.json',
-        '/icons/icon-192.svg',
-        '/icons/icon-512.svg',
-      ])
-    )
-  );
+  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)));
   self.skipWaiting();
 });
 
