@@ -46,4 +46,13 @@ export const categories: Category[] = [
     icon: '✨',
     itemCount: 10,
   },
+  {
+    id: 6,
+    slug: 'bulk-order',
+    name: 'Bulk Order',
+    description: 'Wholesale & bulk quantities for events, resellers & gifting',
+    image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&q=80',
+    icon: '📦',
+    itemCount: 10,
+  },
 ];
