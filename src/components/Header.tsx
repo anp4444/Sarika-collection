@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Menu, X, ShoppingCart } from 'lucide-react';
 import { categories } from '@/data/categories';
 import { useCart } from '@/context/CartContext';
+import InstallButton from './InstallButton';
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -61,7 +62,7 @@ export default function Header() {
           </a>
         </nav>
 
-        <div className="md:hidden flex items-center gap-1">
+        <div className="md:hidden flex items-center gap-0.5">
           <Link
             href="/cart"
             className="relative p-2 text-[#3b1c17] hover:text-[#941424] hover:bg-[#f4e6d2] rounded-lg transition-all"
@@ -73,6 +74,7 @@ export default function Header() {
               </span>
             )}
           </Link>
+          <InstallButton />
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="md:hidden p-2 text-[#3b1c17] hover:bg-[#f4e6d2] rounded-lg"
