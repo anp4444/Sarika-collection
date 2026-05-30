@@ -2,12 +2,10 @@
 
 import Link from 'next/link';
 import { Product } from '@/types';
-import { Star, ShoppingCart } from 'lucide-react';
-import { useCart } from '@/context/CartContext';
+import { Star } from 'lucide-react';
+import AddToCartButton from './AddToCartButton';
 
 export default function ProductCard({ product }: { product: Product }) {
-  const { addItem } = useCart();
-
   return (
     <div className="product-card group">
       <Link href={`/product/${product.slug}`}>
@@ -58,14 +56,7 @@ export default function ProductCard({ product }: { product: Product }) {
           )}
         </div>
 
-        <button
-          type="button"
-          onClick={() => addItem(product)}
-          className="btn-primary w-full justify-center text-center text-sm"
-        >
-          <ShoppingCart size={16} />
-          Add to Cart
-        </button>
+        <AddToCartButton product={product} />
       </div>
     </div>
   );

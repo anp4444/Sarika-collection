@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ShoppingCart, Gift, Clock, ShieldCheck } from 'lucide-react';
 import { categories } from '@/data/categories';
 import { products } from '@/data/products';
-import { useCart } from '@/context/CartContext';
+import AddToCartButton from '@/components/AddToCartButton';
 
 const rakhiProducts = products.filter(p => p.category === 'rakhi-gifts').slice(0, 4);
 const hamperProducts = products.filter(p => p.category === 'rakhi-gifts' && p.name.toLowerCase().includes('hamper')).slice(0, 2).length > 0
@@ -15,7 +15,6 @@ const poojaProducts = products.filter(p => p.category === 'religious-items').sli
 const bagProducts = products.filter(p => p.category === 'bags').slice(0, 1);
 
 function HomeProductCard({ product }: { product: typeof products[0] }) {
-  const { addItem } = useCart();
   return (
     <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
       <Link href={`/product/${product.slug}`}>
@@ -56,14 +55,7 @@ function HomeProductCard({ product }: { product: typeof products[0] }) {
             </>
           )}
         </div>
-        <button
-          type="button"
-          onClick={() => addItem(product)}
-          className="block w-full text-center bg-[#941424] hover:bg-[#6b0e1a] text-white text-sm font-semibold py-3 rounded-xl transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-2 active:scale-95"
-        >
-          <ShoppingCart size={16} />
-          Add to Cart
-        </button>
+        <AddToCartButton product={product} />
       </div>
     </div>
   );

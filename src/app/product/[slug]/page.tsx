@@ -3,16 +3,15 @@
 import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Star, CheckCircle, ShoppingCart, Minus, Plus, Truck, Shield, RefreshCw } from 'lucide-react';
+import { ArrowLeft, Star, CheckCircle, Minus, Plus, Truck, Shield, RefreshCw } from 'lucide-react';
 import { getProductBySlug, getProductsByCategory } from '@/data/products';
 import ProductCard from '@/components/ProductCard';
-import { useCart } from '@/context/CartContext';
+import AddToCartButton from '@/components/AddToCartButton';
 
 export default function ProductDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
   const product = getProductBySlug(slug);
-  const { addItem } = useCart();
   const [qty, setQty] = useState(1);
 
   if (!product) {
@@ -145,32 +144,28 @@ export default function ProductDetailPage() {
                   <button
                     type="button"
                     onClick={() => setQty((q) => Math.max(1, q - 1))}
-                    className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#e3d5c6] text-[#3b1c17] hover:bg-[#f4e6d2] transition-colors active:scale-90"
+                    className="w-10 h-10 flex items-center justify-center rounded-lg border border-[#e3d5c6] text-[#3b1c17] hover:bg-[#f4e6d2] transition-colors active:scale-90"
+                    style={{ touchAction: 'manipulation', minHeight: '44px', minWidth: '44px' }}
                   >
-                    <Minus size={16} />
+                    <Minus size={18} />
                   </button>
-                  <span className="w-10 text-center font-semibold text-base">{qty}</span>
+                  <span className="w-10 text-center font-semibold text-lg">{qty}</span>
                   <button
                     type="button"
                     onClick={() => setQty((q) => q + 1)}
-                    className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#e3d5c6] text-[#3b1c17] hover:bg-[#f4e6d2] transition-colors active:scale-90"
+                    className="w-10 h-10 flex items-center justify-center rounded-lg border border-[#e3d5c6] text-[#3b1c17] hover:bg-[#f4e6d2] transition-colors active:scale-90"
+                    style={{ touchAction: 'manipulation', minHeight: '44px', minWidth: '44px' }}
                   >
-                    <Plus size={16} />
+                    <Plus size={18} />
                   </button>
                 </div>
+                <span className="text-sm text-gray-500 ml-2">₹{product.price} each</span>
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={() => { addItem(product, qty); setQty(1); }}
-              className="w-full flex items-center justify-center gap-2 bg-[#941424] hover:bg-[#6b0e1a] text-white font-semibold py-3.5 px-4 rounded-xl transition-all text-base shadow-md hover:shadow-lg mb-4 active:scale-95"
-            >
-              <ShoppingCart size={20} />
-              Add to Cart — ₹{product.price * qty}
-            </button>
+            <AddToCartButton product={product} qty={qty} className="py-3.5 text-base shadow-md" />
 
-            <p className="text-xs text-gray-400 text-center mb-6">
+            <p className="text-xs text-gray-400 text-center mt-3 mb-6">
               Added items will be saved in your cart. When ready, review and send your order on WhatsApp from the cart page.
             </p>
 
