@@ -1,0 +1,49 @@
+import { Category } from '@/types';
+
+export const categories: Category[] = [
+  {
+    id: 1,
+    slug: 'rakhi-gifts',
+    name: 'Rakhi Gifts',
+    description: 'Beautiful Rakhi and Raksha Bandhan gift combos for your loved ones',
+    image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=600&q=80',
+    icon: '🎀',
+    itemCount: 12,
+  },
+  {
+    id: 2,
+    slug: 'kurti',
+    name: 'Kurti Collection',
+    description: 'Trendy and traditional kurtis for every occasion',
+    image: 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=600&q=80',
+    icon: '👗',
+    itemCount: 15,
+  },
+  {
+    id: 3,
+    slug: 'bags',
+    name: 'Handbags & Purses',
+    description: 'Stylish bags to complement your look',
+    image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=600&q=80',
+    icon: '👜',
+    itemCount: 10,
+  },
+  {
+    id: 4,
+    slug: 'religious-items',
+    name: 'Religious Items',
+    description: 'Sacred items for your spiritual needs',
+    image: 'https://images.unsplash.com/photo-1518655983526-db0f7be16e3d?w=600&q=80',
+    icon: '🪔',
+    itemCount: 10,
+  },
+  {
+    id: 5,
+    slug: 'festive-items',
+    name: 'Festive Items',
+    description: 'Everything you need to celebrate festivals with joy',
+    image: 'https://images.unsplash.com/photo-1606577924006-27d39b132ae2?w=600&q=80',
+    icon: '✨',
+    itemCount: 10,
+  },
+];
