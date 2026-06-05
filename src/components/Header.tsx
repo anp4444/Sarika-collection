@@ -13,9 +13,32 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-[#e3d5c6] bg-[#fbf4ea]/90 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 h-16">
-        <Link href="/" className="flex flex-col leading-tight">
-          <span className="text-lg font-bold text-[#941424] tracking-wide">SARIKA COLLECTION</span>
-          <span className="text-[11px] text-[#785c52] tracking-widest uppercase">Festive Gifting</span>
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <div className="relative">
+            <svg width="42" height="42" viewBox="0 0 42 42" className="drop-shadow-sm">
+              <defs>
+                <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#941424" />
+                  <stop offset="100%" stopColor="#6b0e1a" />
+                </linearGradient>
+              </defs>
+              <rect x="1" y="1" width="40" height="40" rx="10" fill="url(#logoGrad)" />
+              <rect x="1" y="1" width="40" height="40" rx="10" fill="none" stroke="#e3d5c6" strokeWidth="0.5" />
+              <circle cx="21" cy="17" r="7" fill="none" stroke="#f0a646" strokeWidth="1.2" opacity="0.6" />
+              <text x="21" y="21" fontFamily="Georgia, serif" fontSize="16" fontWeight="bold" fill="#fbf4ea" textAnchor="middle" dominantBaseline="central">S</text>
+              <text x="25" y="29" fontFamily="Georgia, serif" fontSize="9" fontWeight="bold" fill="#f0a646" textAnchor="middle" dominantBaseline="central">C</text>
+            </svg>
+          </div>
+          <div className="flex flex-col leading-tight">
+            <span className="text-base font-bold text-[#941424] tracking-wide group-hover:text-[#6b0e1a] transition-colors">
+              SARIKA COLLECTION
+            </span>
+            <span className="text-[10px] text-[#785c52] tracking-[0.2em] uppercase flex items-center gap-1.5">
+              <span className="w-3 h-px bg-[#f0a646]/60 inline-block" />
+              Festive Gifting
+              <span className="w-3 h-px bg-[#f0a646]/60 inline-block" />
+            </span>
+          </div>
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">

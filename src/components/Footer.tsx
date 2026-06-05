@@ -9,11 +9,20 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
-                <span className="text-white font-bold text-lg">SC</span>
+            <div className="flex items-center gap-2.5 mb-4">
+              <svg width="40" height="40" viewBox="0 0 42 42">
+                <rect x="1" y="1" width="40" height="40" rx="10" fill="white" fillOpacity="0.2" />
+                <circle cx="21" cy="17" r="7" fill="none" stroke="#f0a646" strokeWidth="1.2" opacity="0.6" />
+                <text x="21" y="21" fontFamily="Georgia, serif" fontSize="16" fontWeight="bold" fill="white" textAnchor="middle" dominantBaseline="central">S</text>
+                <text x="25" y="29" fontFamily="Georgia, serif" fontSize="9" fontWeight="bold" fill="#f0a646" textAnchor="middle" dominantBaseline="central">C</text>
+              </svg>
+              <div>
+                <span className="text-lg font-bold text-white tracking-wide">SARIKA COLLECTION</span>
+                <div className="text-[10px] text-white/60 tracking-[0.2em] uppercase flex items-center gap-1.5">
+                  <span className="w-3 h-px bg-[#f0a646]/60 inline-block" />
+                  Festive Gifting
+                </div>
               </div>
-              <span className="text-xl font-bold text-white">SARIKA COLLECTION</span>
             </div>
             <p className="text-sm text-gray-300 leading-relaxed mb-4">
               Your one-stop destination for premium Rakhi gifts, trendy kurtis, stylish bags, religious items, and festive decorations.
