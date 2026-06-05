@@ -9,18 +9,22 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2.5 mb-4">
-              <svg width="40" height="40" viewBox="0 0 42 42">
-                <rect x="1" y="1" width="40" height="40" rx="10" fill="white" fillOpacity="0.2" />
-                <circle cx="21" cy="17" r="7" fill="none" stroke="#f0a646" strokeWidth="1.2" opacity="0.6" />
-                <text x="21" y="21" fontFamily="Georgia, serif" fontSize="16" fontWeight="bold" fill="white" textAnchor="middle" dominantBaseline="central">S</text>
-                <text x="25" y="29" fontFamily="Georgia, serif" fontSize="9" fontWeight="bold" fill="#f0a646" textAnchor="middle" dominantBaseline="central">C</text>
+            <div className="flex items-center gap-3 mb-4">
+              <svg width="38" height="38" viewBox="0 0 60 60">
+                <circle cx="30" cy="30" r="28" fill="#1a2634" />
+                <circle cx="30" cy="30" r="28" fill="none" stroke="#f0a646" strokeWidth="1.5" />
+                <circle cx="30" cy="30" r="24" fill="none" stroke="#f0a646" strokeWidth="0.5" opacity="0.4" />
+                <path d="M30 8 L32 16 M30 8 L28 16 M22 30 L14 30 M38 30 L46 30" stroke="#f0a646" strokeWidth="1" opacity="0.5" />
+                <circle cx="30" cy="30" r="12" fill="none" stroke="#f0a646" strokeWidth="1.2" />
+                <text x="30" y="27" fontFamily="Georgia, serif" fontSize="18" fontWeight="bold" fill="#f0a646" textAnchor="middle" dominantBaseline="central">S</text>
+                <text x="34" y="37" fontFamily="Georgia, serif" fontSize="10" fontWeight="bold" fill="#d4a84b" textAnchor="middle" dominantBaseline="central">C</text>
               </svg>
               <div>
-                <span className="text-lg font-bold text-white tracking-wide">SARIKA COLLECTION</span>
-                <div className="text-[10px] text-white/60 tracking-[0.2em] uppercase flex items-center gap-1.5">
-                  <span className="w-3 h-px bg-[#f0a646]/60 inline-block" />
-                  Festive Gifting
+                <span className="text-lg font-semibold text-white tracking-[0.15em] uppercase" style={{ fontFamily: "'Cinzel', Georgia, serif" }}>Sarika Collection</span>
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <span className="w-3 h-px bg-[#f0a646]/50 inline-block" />
+                  <span className="text-[9px] text-white/60 tracking-[0.25em] uppercase font-medium" style={{ fontFamily: "'Cinzel', Georgia, serif" }}>Since 2016</span>
+                  <span className="w-3 h-px bg-[#f0a646]/50 inline-block" />
                 </div>
               </div>
             </div>

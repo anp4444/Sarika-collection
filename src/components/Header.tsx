@@ -13,31 +13,25 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-[#e3d5c6] bg-[#fbf4ea]/90 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 h-16">
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="relative">
-            <svg width="42" height="42" viewBox="0 0 42 42" className="drop-shadow-sm">
-              <defs>
-                <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#941424" />
-                  <stop offset="100%" stopColor="#6b0e1a" />
-                </linearGradient>
-              </defs>
-              <rect x="1" y="1" width="40" height="40" rx="10" fill="url(#logoGrad)" />
-              <rect x="1" y="1" width="40" height="40" rx="10" fill="none" stroke="#e3d5c6" strokeWidth="0.5" />
-              <circle cx="21" cy="17" r="7" fill="none" stroke="#f0a646" strokeWidth="1.2" opacity="0.6" />
-              <text x="21" y="21" fontFamily="Georgia, serif" fontSize="16" fontWeight="bold" fill="#fbf4ea" textAnchor="middle" dominantBaseline="central">S</text>
-              <text x="25" y="29" fontFamily="Georgia, serif" fontSize="9" fontWeight="bold" fill="#f0a646" textAnchor="middle" dominantBaseline="central">C</text>
-            </svg>
-          </div>
-          <div className="flex flex-col leading-tight">
-            <span className="text-base font-bold text-[#941424] tracking-wide group-hover:text-[#6b0e1a] transition-colors">
-              SARIKA COLLECTION
+        <Link href="/" className="flex items-center gap-3 group">
+          <svg width="38" height="38" viewBox="0 0 60 60" className="drop-shadow-sm shrink-0">
+            <circle cx="30" cy="30" r="28" fill="#1a2634" />
+            <circle cx="30" cy="30" r="28" fill="none" stroke="#f0a646" strokeWidth="1.5" />
+            <circle cx="30" cy="30" r="24" fill="none" stroke="#f0a646" strokeWidth="0.5" opacity="0.4" />
+            <path d="M30 8 L32 16 M30 8 L28 16 M22 30 L14 30 M38 30 L46 30" stroke="#f0a646" strokeWidth="1" opacity="0.5" />
+            <circle cx="30" cy="30" r="12" fill="none" stroke="#f0a646" strokeWidth="1.2" />
+            <text x="30" y="27" fontFamily="Georgia, serif" fontSize="18" fontWeight="bold" fill="#f0a646" textAnchor="middle" dominantBaseline="central">S</text>
+            <text x="34" y="37" fontFamily="Georgia, serif" fontSize="10" fontWeight="bold" fill="#d4a84b" textAnchor="middle" dominantBaseline="central">C</text>
+          </svg>
+          <div className="flex flex-col leading-none">
+            <span className="text-[15px] font-[Cinzel,Georgia,serif] font-semibold text-[#1a2634] tracking-[0.15em] uppercase group-hover:text-[#f0a646] transition-colors" style={{ fontFamily: "'Cinzel', Georgia, serif" }}>
+              Sarika Collection
             </span>
-            <span className="text-[10px] text-[#785c52] tracking-[0.2em] uppercase flex items-center gap-1.5">
-              <span className="w-3 h-px bg-[#f0a646]/60 inline-block" />
-              Festive Gifting
-              <span className="w-3 h-px bg-[#f0a646]/60 inline-block" />
-            </span>
+            <div className="flex items-center gap-1.5 mt-0.5">
+              <span className="w-4 h-px bg-[#f0a646]/50 inline-block" />
+              <span className="text-[9px] text-[#785c52] tracking-[0.25em] uppercase font-medium" style={{ fontFamily: "'Cinzel', Georgia, serif" }}>Since 2016</span>
+              <span className="w-4 h-px bg-[#f0a646]/50 inline-block" />
+            </div>
           </div>
         </Link>
 
