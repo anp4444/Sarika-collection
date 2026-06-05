@@ -6,7 +6,7 @@ export const categories: Category[] = [
     slug: 'rakhi-gifts',
     name: 'Rakhi',
     description: 'Beautiful Rakhi and Raksha Bandhan gift combos for your loved ones',
-    image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=600&q=80',
+    image: '/images/peacock rakhi.jpg',
     icon: '🎀',
     itemCount: 12,
   },
