@@ -185,7 +185,7 @@ export const products: Product[] = [
     id: 21, slug: 'helicopter-bro-rakhi',
     name: 'Helicopter Bro Rakhi Limited Edition',
     category: 'rakhi-gifts', subcategory: 'kids-rakhi',
-    images: ['/images/Helicopter Bro Rakhi! ?? Limited Edition!.jpg'],
+    images: ['/images/helicopter-bro-rakhi-limited-edition.jpg'],
     price: 50, mrp: 100, discountPercent: 50, rating: 4.5,
     description: 'Limited edition helicopter bro rakhi for kids.',
     features: ['Helicopter Design', 'Limited Edition', 'Kid-Friendly'],
@@ -194,7 +194,7 @@ export const products: Product[] = [
     id: 22, slug: 'pooh-rakhi',
     name: 'Pooh Rakhi',
     category: 'rakhi-gifts', subcategory: 'kids-rakhi',
-    images: ['/images/pooh ?? rakhi.jpg'],
+    images: ['/images/pooh-rakhi.jpg'],
     price: 70, mrp: 140, discountPercent: 50, rating: 4.5,
     description: 'Lovely Pooh bear design rakhi for kids.',
     features: ['Pooh Design', 'Cute', 'Kid-Friendly'],
@@ -239,7 +239,7 @@ export const products: Product[] = [
     id: 27, slug: 'meenakari-magic',
     name: 'Meenakari Magic Rakhi',
     category: 'rakhi-gifts', subcategory: 'rakhi',
-    images: ['/images/😍 Meenakari Magic!.jpg'],
+    images: ['/images/ðŸ˜ Meenakari Magic!.jpg'],
     price: 40, mrp: 80, discountPercent: 50, rating: 4.5,
     description: 'Beautiful Meenakari Magic rakhi with stunning craftsmanship.',
     features: ['Meenakari Work', 'Elegant', 'Festival Special'],
@@ -248,7 +248,7 @@ export const products: Product[] = [
     id: 28, slug: 'lotus-rakhi',
     name: 'Lotus Rakhi',
     category: 'rakhi-gifts', subcategory: 'rakhi',
-    images: ['/images/Lotus 🪷 rakhi.jpg'],
+    images: ['/images/Lotus ðŸª· rakhi.jpg'],
     price: 60, mrp: 120, discountPercent: 50, rating: 4.5,
     description: 'Beautiful lotus design rakhi for a sacred touch.',
     features: ['Lotus Design', 'Elegant', 'Spiritual'],
@@ -365,7 +365,7 @@ export const products: Product[] = [
     id: 41, slug: 'mandala-art-stone-rakhi',
     name: 'Mandala Art Stone Rakhi',
     category: 'rakhi-gifts', subcategory: 'rakhi',
-    images: ['/images/✨ Mandala Art Stone rakhi.jpg'],
+    images: ['/images/âœ¨ Mandala Art Stone rakhi.jpg'],
     price: 95, mrp: 190, discountPercent: 50, rating: 4.5,
     description: 'Beautiful Mandala Art Stone rakhi with intricate design.',
     features: ['Mandala Art', 'Stone Work', 'Intricate Design'],
@@ -391,3 +391,4 @@ export function getNewArrivals(): Product[] {
 export function getBestSellers(): Product[] {
   return products.filter((p) => p.isBestSeller).slice(0, 8);
 }
+
