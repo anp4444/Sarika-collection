@@ -2,72 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ShoppingCart, Gift, Clock, ShieldCheck, Sparkles, TrendingUp, Heart, Star } from 'lucide-react';
+import { ShoppingCart, Gift, Clock, ShieldCheck, Sparkles, TrendingUp, Heart } from 'lucide-react';
 import { categories } from '@/data/categories';
-import { products } from '@/data/products';
-import AddToCartButton from '@/components/AddToCartButton';
-
-const rakhiProducts = products.filter(p => p.category === 'rakhi-gifts').slice(0, 4);
-const hamperProducts = products.filter(p => p.category === 'rakhi-gifts' && p.name.toLowerCase().includes('hamper')).slice(0, 2).length > 0
-  ? products.filter(p => p.category === 'rakhi-gifts' && p.name.toLowerCase().includes('hamper')).slice(0, 2)
-  : products.filter(p => p.category === 'rakhi-gifts').slice(4, 6);
-const poojaProducts = products.filter(p => p.category === 'religious-items').slice(0, 3);
-const bagProducts = products.filter(p => p.category === 'bags').slice(0, 1);
-const bestsellers = products.filter(p => p.isBestSeller).slice(0, 4);
-
-function HomeProductCard({ product }: { product: typeof products[0] }) {
-  return (
-    <div className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-amber-100/50">
-      <Link href={`/product/${product.slug}`}>
-        <div className="relative overflow-hidden">
-          <img
-            src={product.images[0]}
-            alt={product.name}
-            className="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-500"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          <div className="absolute top-3 left-3 flex flex-col gap-1">
-            {product.isNew && (
-              <span className="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">New Arrival</span>
-            )}
-            {product.isBestSeller && (
-              <span className="bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">Bestseller</span>
-            )}
-          </div>
-          {product.discountPercent > 0 && (
-            <span className="absolute top-3 right-3 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-              {product.discountPercent}% OFF
-            </span>
-          )}
-        </div>
-      </Link>
-      <div className="p-4">
-        <Link href={`/product/${product.slug}`}>
-          <h3 className="font-semibold text-[#3b1c17] text-sm leading-tight mb-1 group-hover:text-[#941424] transition-colors line-clamp-2">
-            {product.name}
-          </h3>
-        </Link>
-        <div className="flex items-center gap-1 mb-2">
-          {[...Array(5)].map((_, i) => (
-            <Star key={i} size={12} className={i < Math.round(product.rating) ? 'text-amber-400 fill-amber-400' : 'text-gray-200'} />
-          ))}
-          <span className="text-[10px] text-gray-400 ml-1">({product.rating})</span>
-        </div>
-        <div className="flex items-baseline gap-2 mb-3">
-          <span className="text-lg font-bold text-[#941424]">₹{product.price}</span>
-          {product.mrp > product.price && (
-            <>
-              <span className="text-sm text-gray-400 line-through">₹{product.mrp}</span>
-              <span className="text-[10px] bg-green-100 text-green-700 font-bold px-1.5 py-0.5 rounded">{product.discountPercent}% OFF</span>
-            </>
-          )}
-        </div>
-        <AddToCartButton product={product} />
-      </div>
-    </div>
-  );
-}
 
 export default function HomePage() {
   const categoryCards = categories.filter(c => ['rakhi-gifts', 'bags', 'religious-items', 'food-items'].includes(c.slug));
@@ -251,8 +187,10 @@ export default function HomePage() {
             </Link>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {bestsellers.map((p) => (
-              <HomeProductCard key={p.id} product={p} />
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="bg-white rounded-2xl border border-dashed border-amber-200 h-52 flex items-center justify-center">
+                <p className="text-gray-300 text-xs font-medium">Add product</p>
+              </div>
             ))}
           </div>
         </div>
@@ -301,9 +239,25 @@ export default function HomePage() {
               View All →
             </Link>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {rakhiProducts.map((p) => (
-              <HomeProductCard key={p.id} product={p} />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            {[
+              { title: 'Kids Rakhi', icon: '🧒', desc: 'Colourful & fun rakhis for little brothers', slug: 'kids-rakhi', bg: 'linear-gradient(135deg, #ec4899, #f43f5e)' },
+              { title: 'Couple Rakhi', icon: '💑', desc: 'Lumba rakhis & sets for bhabhi & bhaiya', slug: 'couple-rakhi', bg: 'linear-gradient(135deg, #a855f7, #6366f1)' },
+              { title: 'Rakhi', icon: '🪢', desc: 'Traditional & designer rakhis for every bond', slug: 'rakhi', bg: 'linear-gradient(135deg, #941424, #6b0e1a)' },
+            ].map((sub) => (
+              <Link key={sub.slug} href={`/category/rakhi-gifts?sub=${sub.slug}`} className="group relative rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div className="relative h-44 p-6 flex flex-col justify-end" style={{ background: sub.bg }}>
+                  <div className="absolute inset-0 bg-black/10" />
+                  <span className="text-5xl mb-3 relative">{sub.icon}</span>
+                  <h3 className="text-white font-bold text-xl relative drop-shadow-md">{sub.title}</h3>
+                  <p className="text-white/80 text-sm mt-1 relative">{sub.desc}</p>
+                  <div className="absolute top-4 right-4 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" className="w-4 h-4">
+                      <path d="M5 12h14M13 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -323,11 +277,10 @@ export default function HomePage() {
             </Link>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {hamperProducts.map((p) => (
-              <HomeProductCard key={p.id} product={p} />
-            ))}
-            {products.filter(p => p.category === 'rakhi-gifts').slice(6, 8).map((p) => (
-              <HomeProductCard key={p.id} product={p} />
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="bg-white rounded-2xl border border-dashed border-amber-200 h-52 flex items-center justify-center">
+                <p className="text-gray-300 text-xs font-medium">Add product</p>
+              </div>
             ))}
           </div>
         </div>
@@ -347,8 +300,10 @@ export default function HomePage() {
             </Link>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {poojaProducts.map((p) => (
-              <HomeProductCard key={p.id} product={p} />
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="bg-white rounded-2xl border border-dashed border-amber-200 h-52 flex items-center justify-center">
+                <p className="text-gray-300 text-xs font-medium">Add product</p>
+              </div>
             ))}
           </div>
         </div>
@@ -368,11 +323,10 @@ export default function HomePage() {
             </Link>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {bagProducts.map((p) => (
-              <HomeProductCard key={p.id} product={p} />
-            ))}
-            {products.filter(p => p.category === 'bags').slice(1, 4).map((p) => (
-              <HomeProductCard key={p.id} product={p} />
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="bg-white rounded-2xl border border-dashed border-amber-200 h-52 flex items-center justify-center">
+                <p className="text-gray-300 text-xs font-medium">Add product</p>
+              </div>
             ))}
           </div>
         </div>
