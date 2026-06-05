@@ -4,7 +4,7 @@ export const categories: Category[] = [
   {
     id: 1,
     slug: 'rakhi-gifts',
-    name: 'Rakhi Gifts',
+    name: 'Rakhi',
     description: 'Beautiful Rakhi and Raksha Bandhan gift combos for your loved ones',
     image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=600&q=80',
     icon: '🎀',

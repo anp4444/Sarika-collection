@@ -42,7 +42,7 @@ export default function Header() {
           {categories.map((cat) => (
             <Link
               key={cat.id}
-              href={`/category/${cat.slug}`}
+              href={cat.slug === 'rakhi-gifts' ? '/rakhi' : `/category/${cat.slug}`}
               className="px-3 py-2 text-sm font-medium text-[#3b1c17] hover:text-[#941424] rounded-lg hover:bg-[#f4e6d2] transition-all"
             >
               {cat.name}
@@ -106,7 +106,7 @@ export default function Header() {
               Home
             </Link>
             {categories.map((cat) => (
-              <Link key={cat.id} href={`/category/${cat.slug}`} onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-sm font-medium text-[#3b1c17] hover:bg-[#f4e6d2] rounded-lg">
+              <Link key={cat.id} href={cat.slug === 'rakhi-gifts' ? '/rakhi' : `/category/${cat.slug}`} onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-sm font-medium text-[#3b1c17] hover:bg-[#f4e6d2] rounded-lg">
                 {cat.name}
               </Link>
             ))}

@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ShoppingCart, Gift, Clock, ShieldCheck, Sparkles, TrendingUp, Heart } from 'lucide-react';
+import { ShoppingCart, Gift, Clock, ShieldCheck, Sparkles, TrendingUp, Heart, Star } from 'lucide-react';
 import { categories } from '@/data/categories';
+import { products } from '@/data/products';
+import AddToCartButton from '@/components/AddToCartButton';
 
 export default function HomePage() {
   const categoryCards = categories.filter(c => ['rakhi-gifts', 'bags', 'religious-items', 'food-items'].includes(c.slug));
@@ -239,26 +241,128 @@ export default function HomePage() {
               View All →
             </Link>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-            {[
-              { title: 'Kids Rakhi', icon: '🧒', desc: 'Colourful & fun rakhis for little brothers', slug: 'kids-rakhi', bg: 'linear-gradient(135deg, #ec4899, #f43f5e)' },
-              { title: 'Couple Rakhi', icon: '💑', desc: 'Lumba rakhis & sets for bhabhi & bhaiya', slug: 'couple-rakhi', bg: 'linear-gradient(135deg, #a855f7, #6366f1)' },
-              { title: 'Rakhi', icon: '🪢', desc: 'Traditional & designer rakhis for every bond', slug: 'rakhi', bg: 'linear-gradient(135deg, #941424, #6b0e1a)' },
-            ].map((sub) => (
-              <Link key={sub.slug} href={`/category/rakhi-gifts?sub=${sub.slug}`} className="group relative rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="relative h-44 p-6 flex flex-col justify-end" style={{ background: sub.bg }}>
-                  <div className="absolute inset-0 bg-black/10" />
-                  <span className="text-5xl mb-3 relative">{sub.icon}</span>
-                  <h3 className="text-white font-bold text-xl relative drop-shadow-md">{sub.title}</h3>
-                  <p className="text-white/80 text-sm mt-1 relative">{sub.desc}</p>
-                  <div className="absolute top-4 right-4 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" className="w-4 h-4">
-                      <path d="M5 12h14M13 5l7 7-7 7" />
-                    </svg>
+
+          {/* Kids Rakhi */}
+          <div className="mb-10">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="w-1 h-6 bg-pink-500 rounded-full" />
+              <h3 className="text-lg font-bold text-[#3b1c17]">Kids Rakhi</h3>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              {products.filter(p => p.subcategory === 'kids-rakhi').map((p) => (
+                <div key={p.id} className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-amber-100/50">
+                  <Link href={`/product/${p.slug}`}>
+                    <div className="relative overflow-hidden">
+                      <img src={p.images[0]} alt={p.name} className="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </div>
+                  </Link>
+                  <div className="p-4">
+                    <Link href={`/product/${p.slug}`}>
+                      <h4 className="font-semibold text-[#3b1c17] text-sm leading-tight mb-1 group-hover:text-[#941424] transition-colors line-clamp-2">{p.name}</h4>
+                    </Link>
+                    <div className="flex items-center gap-1 mb-2">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} size={12} className={i < Math.round(p.rating) ? 'text-amber-400 fill-amber-400' : 'text-gray-200'} />
+                      ))}
+                    </div>
+                    <div className="flex items-baseline gap-2 mb-3">
+                      <span className="text-lg font-bold text-[#941424]">₹{p.price}</span>
+                      {p.mrp > p.price && (
+                        <span className="text-sm text-gray-400 line-through">₹{p.mrp}</span>
+                      )}
+                    </div>
+                    <AddToCartButton product={p} />
                   </div>
                 </div>
-              </Link>
-            ))}
+              ))}
+              {products.filter(p => p.subcategory === 'kids-rakhi').length === 0 && (
+                <div className="col-span-full bg-white rounded-2xl border border-dashed border-amber-200 h-40 flex items-center justify-center">
+                  <p className="text-gray-300 text-xs font-medium">No products yet</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Couple Rakhi */}
+          <div className="mb-10">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="w-1 h-6 bg-purple-500 rounded-full" />
+              <h3 className="text-lg font-bold text-[#3b1c17]">Couple Rakhi</h3>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              {products.filter(p => p.subcategory === 'couple-rakhi').map((p) => (
+                <div key={p.id} className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-amber-100/50">
+                  <Link href={`/product/${p.slug}`}>
+                    <div className="relative overflow-hidden">
+                      <img src={p.images[0]} alt={p.name} className="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </div>
+                  </Link>
+                  <div className="p-4">
+                    <Link href={`/product/${p.slug}`}>
+                      <h4 className="font-semibold text-[#3b1c17] text-sm leading-tight mb-1 group-hover:text-[#941424] transition-colors line-clamp-2">{p.name}</h4>
+                    </Link>
+                    <div className="flex items-center gap-1 mb-2">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} size={12} className={i < Math.round(p.rating) ? 'text-amber-400 fill-amber-400' : 'text-gray-200'} />
+                      ))}
+                    </div>
+                    <div className="flex items-baseline gap-2 mb-3">
+                      <span className="text-lg font-bold text-[#941424]">₹{p.price}</span>
+                      {p.mrp > p.price && (
+                        <span className="text-sm text-gray-400 line-through">₹{p.mrp}</span>
+                      )}
+                    </div>
+                    <AddToCartButton product={p} />
+                  </div>
+                </div>
+              ))}
+              {products.filter(p => p.subcategory === 'couple-rakhi').length === 0 && (
+                <div className="col-span-full bg-white rounded-2xl border border-dashed border-amber-200 h-40 flex items-center justify-center">
+                  <p className="text-gray-300 text-xs font-medium">Coming soon</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Rakhi */}
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <span className="w-1 h-6 bg-[#941424] rounded-full" />
+              <h3 className="text-lg font-bold text-[#3b1c17]">Rakhi</h3>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              {products.filter(p => p.subcategory === 'rakhi').map((p) => (
+                <div key={p.id} className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-amber-100/50">
+                  <Link href={`/product/${p.slug}`}>
+                    <div className="relative overflow-hidden">
+                      <img src={p.images[0]} alt={p.name} className="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </div>
+                  </Link>
+                  <div className="p-4">
+                    <Link href={`/product/${p.slug}`}>
+                      <h4 className="font-semibold text-[#3b1c17] text-sm leading-tight mb-1 group-hover:text-[#941424] transition-colors line-clamp-2">{p.name}</h4>
+                    </Link>
+                    <div className="flex items-center gap-1 mb-2">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} size={12} className={i < Math.round(p.rating) ? 'text-amber-400 fill-amber-400' : 'text-gray-200'} />
+                      ))}
+                    </div>
+                    <div className="flex items-baseline gap-2 mb-3">
+                      <span className="text-lg font-bold text-[#941424]">₹{p.price}</span>
+                      {p.mrp > p.price && (
+                        <span className="text-sm text-gray-400 line-through">₹{p.mrp}</span>
+                      )}
+                    </div>
+                    <AddToCartButton product={p} />
+                  </div>
+                </div>
+              ))}
+              {products.filter(p => p.subcategory === 'rakhi').length === 0 && (
+                <div className="col-span-full bg-white rounded-2xl border border-dashed border-amber-200 h-40 flex items-center justify-center">
+                  <p className="text-gray-300 text-xs font-medium">Coming soon</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </section>
