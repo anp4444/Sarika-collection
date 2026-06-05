@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fbf4ea;
+  --background: #FFDAB9;
   --foreground: #3b1c17;
   --primary: #941424;
   --primary-dark: #6b0e1a;
@@ -25,7 +25,7 @@
 body {
   font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
   color: #3b1c17;
-  background: #fbf4ea;
+  background: #FFDAB9;
 }
 
 /* Brand gradient */

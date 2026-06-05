@@ -133,7 +133,7 @@ export default function CartPage() {
                 )}
                 <div className="flex justify-between text-gray-600">
                   <span>Shipping</span>
-                  <span className="text-green-600 font-medium">Free</span>
+                  <span className="text-gray-400">Based on location</span>
                 </div>
                 <hr className="border-[#e3d5c6]" />
                 <div className="flex justify-between font-bold text-[#3b1c17] text-base">
