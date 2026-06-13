@@ -168,7 +168,7 @@ function MobileDiscovery({
   const hasFilter = query.trim() || activeCategory !== 'all';
 
   return (
-    <section id="mobile-discovery" className="bg-white px-4 py-5 md:hidden">
+    <section id="mobile-discovery" className="bg-white px-4 pb-5 pt-2 md:hidden">
       <div className="mb-4">
         <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7832d]">Quick find</p>
         <h2 className="mt-1 text-2xl font-black text-[#2b1712]">Search and shop faster</h2>
@@ -356,6 +356,24 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Sticky Category Bar - Mobile */}
+      <div className="sticky top-16 z-40 border-b border-[#e3d5c6] bg-white shadow-sm md:hidden">
+        <div className="overflow-x-auto px-4 py-2.5">
+          <div className="flex gap-2">
+            {categories.map((cat) => (
+              <Link
+                key={cat.slug}
+                href={`/category/${cat.slug}`}
+                className="flex shrink-0 items-center gap-1.5 rounded-full border border-[#e3d5c6] bg-[#fffaf4] px-3.5 py-2 text-xs font-bold text-[#3b1c17] transition hover:border-[#941424] hover:text-[#941424]"
+              >
+                <span className="text-sm">{cat.icon}</span>
+                {cat.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
 
       <MobileDiscovery
         query={query}
