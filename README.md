@@ -29,8 +29,16 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deploy on Cloudflare Pages
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project is configured as a static Next.js export for Cloudflare Pages.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Use these Cloudflare Pages settings:
+
+- Build command: `npm run build:cloudflare`
+- Build output directory: `out`
+- Node.js version: `20` or newer
+
+The storefront uses local product data and WhatsApp checkout, so it does not require a Node.js server, API routes, or Cloudflare Workers.
+
+`public/_headers` adds long-lived caching for hashed Next.js assets and product images while keeping HTML and the service worker fresh.

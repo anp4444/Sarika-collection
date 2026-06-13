@@ -1,26 +1,30 @@
-'use client';
-
-import { useParams } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { categories } from '@/data/categories';
 import { products } from '@/data/products';
 import ProductCard from '@/components/ProductCard';
 
-export default function CategoryPage() {
-  const params = useParams();
-  const slug = params.slug as string;
+export const dynamicParams = false;
+
+type CategoryPageProps = {
+  params: Promise<{ slug: string }>;
+};
+
+export function generateStaticParams() {
+  return categories.map((category) => ({
+    slug: category.slug,
+  }));
+}
+
+export default async function CategoryPage({ params }: CategoryPageProps) {
+  const { slug } = await params;
 
   const category = categories.find((c) => c.slug === slug);
   const categoryProducts = products.filter((p) => p.category === slug);
 
   if (!category) {
-    return (
-      <div className="max-w-7xl mx-auto px-4 py-20 text-center">
-        <h1 className="text-2xl font-bold text-gray-800 mb-2">Category not found</h1>
-        <Link href="/" className="text-[#941424] hover:underline">Go back home</Link>
-      </div>
-    );
+    notFound();
   }
 
   return (
