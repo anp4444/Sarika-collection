@@ -8,7 +8,7 @@ export const categories: Category[] = [
     description: 'Rakhis, lumba pairs and Raksha Bandhan gift sets.',
     image: '/images/products/WhatsApp Image 2026-06-13 at 2.51.21 PM (1).jpeg',
     icon: 'R',
-    itemCount: 50,
+    itemCount: 65,
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ export const categories: Category[] = [
     description: 'Travel bags, trolley sets, handbags and storage bags.',
     image: '/images/products/WhatsApp Image 2026-06-13 at 2.51.35 PM (2).jpeg',
     icon: 'B',
-    itemCount: 8,
+    itemCount: 24,
   },
   {
     id: 3,
@@ -26,7 +26,7 @@ export const categories: Category[] = [
     description: 'Bottles, mugs, organizers, jars and everyday home products.',
     image: '/images/products/WhatsApp Image 2026-06-13 at 2.51.39 PM.jpeg',
     icon: 'H',
-    itemCount: 12,
+    itemCount: 36,
   },
   {
     id: 4,
@@ -35,7 +35,7 @@ export const categories: Category[] = [
     description: 'Fun toys, kids gifts and playful accessories.',
     image: '/images/products/WhatsApp Image 2026-06-13 at 2.51.37 PM.jpeg',
     icon: 'T',
-    itemCount: 2,
+    itemCount: 11,
   },
   {
     id: 5,
@@ -44,7 +44,7 @@ export const categories: Category[] = [
     description: 'Stylish sunglasses and wearable accessories.',
     image: '/images/products/WhatsApp Image 2026-06-13 at 2.51.41 PM.jpeg',
     icon: 'F',
-    itemCount: 2,
+    itemCount: 7,
   },
   {
     id: 6,
@@ -53,7 +53,7 @@ export const categories: Category[] = [
     description: 'Decorative festive pieces, pooja accents and celebration items.',
     image: '/images/products/WhatsApp Image 2026-06-13 at 2.51.35 PM.jpeg',
     icon: 'D',
-    itemCount: 3,
+    itemCount: 17,
   },
   {
     id: 7,
@@ -62,6 +62,24 @@ export const categories: Category[] = [
     description: 'Practical seasonal and daily-use products.',
     image: '/images/products/WhatsApp Image 2026-06-13 at 2.51.34 PM (2).jpeg',
     icon: 'U',
-    itemCount: 1,
+    itemCount: 3,
+  },
+  {
+    id: 8,
+    slug: 'apparel',
+    name: 'Apparel',
+    description: 'Co-ord sets, ethnic outfits and ready-to-wear pieces.',
+    image: '/images/products 2/WhatsApp Image 2026-06-13 at 4.23.28 PM.jpeg',
+    icon: 'A',
+    itemCount: 4,
+  },
+  {
+    id: 9,
+    slug: 'home-furnishings',
+    name: 'Home Furnishings',
+    description: 'Bedsheets, bedding sets, chair covers and soft home accents.',
+    image: '/images/products 2/WhatsApp Image 2026-06-13 at 4.24.07 PM (2).jpeg',
+    icon: 'F',
+    itemCount: 12,
   },
 ];
