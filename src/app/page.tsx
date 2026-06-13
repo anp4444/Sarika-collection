@@ -20,10 +20,13 @@ import type { Product } from '@/types';
 
 const festivalDate = new Date('2026-08-28T00:00:00');
 const categoryImages: Record<string, string> = {
-  'rakhi-gifts': '/images/peacock rakhi.jpg',
-  bags: '/images/charm pair availble in lavener yellow light green light blue and pink.jpg',
-  'religious-items': '/images/ganesha rakhi.jpg',
-  'food-items': '/images/hero-rakhi.png',
+  'rakhi-gifts': '/images/products/WhatsApp Image 2026-06-13 at 2.51.21 PM (1).jpeg',
+  bags: '/images/products/WhatsApp Image 2026-06-13 at 2.51.35 PM (2).jpeg',
+  'home-kitchen': '/images/products/WhatsApp Image 2026-06-13 at 2.51.39 PM.jpeg',
+  'toys-kids': '/images/products/WhatsApp Image 2026-06-13 at 2.51.37 PM.jpeg',
+  'fashion-accessories': '/images/products/WhatsApp Image 2026-06-13 at 2.51.41 PM.jpeg',
+  'festive-items': '/images/products/WhatsApp Image 2026-06-13 at 2.51.35 PM.jpeg',
+  'utility-items': '/images/products/WhatsApp Image 2026-06-13 at 2.51.34 PM (2).jpeg',
 };
 
 function useCountdown() {
@@ -82,6 +85,8 @@ function SectionHeading({
 }
 
 function ProductTile({ product, featured = false }: { product: Product; featured?: boolean }) {
+  const hasPrice = product.price > 0;
+
   return (
     <article className={`group overflow-hidden rounded-[1.35rem] border border-[#eadbc5] bg-white shadow-[0_18px_45px_rgba(60,30,12,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(60,30,12,0.12)] ${featured ? 'md:grid md:grid-cols-[1.1fr_0.9fr]' : ''}`}>
       <Link href={`/product/${product.slug}`} className={`block overflow-hidden bg-[#f7ead8] ${featured ? 'min-h-[320px]' : ''}`}>
@@ -97,7 +102,7 @@ function ProductTile({ product, featured = false }: { product: Product; featured
             <Star size={15} className="fill-current" />
             <span className="text-xs font-bold text-[#6d5146]">{product.rating}</span>
           </div>
-          {product.discountPercent > 0 && (
+          {hasPrice && product.discountPercent > 0 && (
             <span className="rounded-full bg-[#edf8f1] px-3 py-1 text-[11px] font-bold text-[#087c43]">
               {product.discountPercent}% off
             </span>
@@ -110,8 +115,8 @@ function ProductTile({ product, featured = false }: { product: Product; featured
         </Link>
         <p className="mt-2 line-clamp-2 text-sm leading-6 text-[#7b6056]">{product.description}</p>
         <div className="mt-4 flex flex-wrap items-baseline gap-2">
-          <span className="text-2xl font-black text-[#941424]">&#8377;{product.price}</span>
-          {product.mrp > product.price && <span className="text-sm font-medium text-[#a39187] line-through">&#8377;{product.mrp}</span>}
+          <span className="text-2xl font-black text-[#941424]">{hasPrice ? `₹${product.price}` : 'Ask for price'}</span>
+          {hasPrice && product.mrp > product.price && <span className="text-sm font-medium text-[#a39187] line-through">₹{product.mrp}</span>}
         </div>
         <div className="mt-4">
           <AddToCartButton product={product} className="py-3 text-sm shadow-[0_10px_24px_rgba(148,20,36,0.18)]" />
@@ -146,7 +151,7 @@ export default function HomePage() {
   const signatureRakhis = products.filter((p) => p.subcategory === 'rakhi').slice(0, 4);
   const coupleRakhis = products.filter((p) => p.subcategory === 'couple-rakhi').slice(0, 4);
   const kidsRakhis = products.filter((p) => p.subcategory === 'kids-rakhi').slice(0, 4);
-  const categoryCards = categories.filter((c) => ['rakhi-gifts', 'bags', 'religious-items', 'food-items'].includes(c.slug));
+  const categoryCards = categories;
 
   return (
     <>
@@ -226,7 +231,7 @@ export default function HomePage() {
                 <img src={product.images[0]} alt={product.name} className="h-full w-full object-cover" />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4">
                   <p className="line-clamp-1 text-sm font-bold text-white">{product.name}</p>
-                  <p className="text-xs font-semibold text-white/80">&#8377;{product.price}</p>
+                  <p className="text-xs font-semibold text-white/80">{product.price > 0 ? `₹${product.price}` : 'Ask for price'}</p>
                 </div>
               </Link>
             ))}

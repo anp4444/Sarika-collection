@@ -1,24 +1,29 @@
 'use client';
 
 import Link from 'next/link';
-import { Trash2, Minus, Plus, ShoppingBag, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Trash2, Minus, Plus, ShoppingBag, ArrowLeft } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 
 const WA_NUMBER = '919422703807';
+
+const priceText = (price: number) => (price > 0 ? `₹${price}` : 'Ask for price');
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, clearCart, subtotal, totalItems } = useCart();
 
   const totalMrp = items.reduce((sum, i) => sum + i.mrp * i.quantity, 0);
   const totalDiscount = totalMrp - subtotal;
+  const hasAskPriceItems = items.some((i) => i.price <= 0);
 
   const waMessage = encodeURIComponent(
-    `Hello Sarika Collection! 🙏\n\nI would like to place an order:\n\n${items
-      .map(
-        (i, idx) =>
-          `${idx + 1}. ${i.name} — ₹${i.price} × ${i.quantity} = ₹${i.price * i.quantity}`
-      )
-      .join('\n')}\n\n━━━━━━━━━━━━━━━\nTotal Items: ${totalItems}\nSubtotal: ₹${subtotal}\nTotal Savings: ₹${totalDiscount}\n━━━━━━━━━━━━━━━\n\nPlease confirm the order. Thank you!`
+    `Hello Sarika Collection!\n\nI would like to place an order:\n\n${items
+      .map((i, idx) => {
+        const lineTotal = i.price > 0 ? ` = ₹${i.price * i.quantity}` : '';
+        return `${idx + 1}. ${i.name} - ${priceText(i.price)} x ${i.quantity}${lineTotal}`;
+      })
+      .join('\n')}\n\nTotal Items: ${totalItems}\nSubtotal: ₹${subtotal}${
+      hasAskPriceItems ? '\nSome items need price confirmation.' : ''
+    }\nTotal Savings: ₹${totalDiscount}\n\nPlease confirm the order. Thank you!`
   );
   const waUrl = `https://wa.me/${WA_NUMBER}?text=${waMessage}`;
 
@@ -43,13 +48,14 @@ export default function CartPage() {
       <div className="bg-[#fbf4ea] border-b border-[#e3d5c6]">
         <div className="max-w-7xl mx-auto px-4 py-8">
           <h1 className="text-2xl md:text-3xl font-bold text-[#3b1c17]">Your Cart</h1>
-          <p className="text-[#785c52] text-sm mt-1">{totalItems} item{totalItems > 1 ? 's' : ''} in your cart</p>
+          <p className="text-[#785c52] text-sm mt-1">
+            {totalItems} item{totalItems > 1 ? 's' : ''} in your cart
+          </p>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Cart Items */}
           <div className="lg:col-span-2 space-y-4">
             {items.map((item) => (
               <div key={item.slug} className="bg-white rounded-2xl border border-[#e3d5c6] p-4 flex gap-4">
@@ -67,8 +73,8 @@ export default function CartPage() {
                     </h3>
                   </Link>
                   <div className="flex items-baseline gap-2 mt-1">
-                    <span className="font-bold text-[#941424]">₹{item.price}</span>
-                    {item.mrp > item.price && (
+                    <span className="font-bold text-[#941424]">{priceText(item.price)}</span>
+                    {item.price > 0 && item.mrp > item.price && (
                       <span className="text-xs text-gray-400 line-through">₹{item.mrp}</span>
                     )}
                   </div>
@@ -92,7 +98,7 @@ export default function CartPage() {
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="font-bold text-[#3b1c17] text-sm">
-                        ₹{item.price * item.quantity}
+                        {item.price > 0 ? `₹${item.price * item.quantity}` : 'Confirm price'}
                       </span>
                       <button
                         type="button"
@@ -115,7 +121,6 @@ export default function CartPage() {
             </button>
           </div>
 
-          {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl border border-[#e3d5c6] p-6 sticky top-24">
               <h2 className="font-bold text-[#3b1c17] text-lg mb-4">Order Summary</h2>
@@ -129,6 +134,11 @@ export default function CartPage() {
                   <div className="flex justify-between text-green-600">
                     <span>Savings</span>
                     <span>-₹{totalDiscount}</span>
+                  </div>
+                )}
+                {hasAskPriceItems && (
+                  <div className="rounded-lg bg-amber-50 px-3 py-2 text-amber-700">
+                    Some item prices will be confirmed on WhatsApp.
                   </div>
                 )}
                 <div className="flex justify-between text-gray-600">
@@ -155,7 +165,7 @@ export default function CartPage() {
               </a>
 
               <p className="text-xs text-gray-400 mt-3 text-center">
-                You&apos;ll be redirected to WhatsApp with your complete order summary. We&apos;ll confirm availability and delivery details.
+                You will be redirected to WhatsApp with your complete order summary. We will confirm availability and delivery details.
               </p>
 
               <Link

@@ -6,6 +6,8 @@ import { Star } from 'lucide-react';
 import AddToCartButton from './AddToCartButton';
 
 export default function ProductCard({ product }: { product: Product }) {
+  const hasPrice = product.price > 0;
+
   return (
     <div className="product-card group">
       <Link href={`/product/${product.slug}`}>
@@ -24,7 +26,7 @@ export default function ProductCard({ product }: { product: Product }) {
               <span className="badge-bestseller px-3 py-1 rounded-full text-xs font-bold">BEST SELLER</span>
             )}
           </div>
-          {product.discountPercent > 0 && (
+          {hasPrice && product.discountPercent > 0 && (
             <span className="badge-discount absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold">
               {product.discountPercent}% OFF
             </span>
@@ -47,8 +49,8 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
 
         <div className="flex items-baseline flex-wrap gap-1.5 mb-3">
-          <span className="current-price">₹{product.price}</span>
-          {product.mrp > product.price && (
+          <span className="current-price">{hasPrice ? `₹${product.price}` : 'Ask for price'}</span>
+          {hasPrice && product.mrp > product.price && (
             <>
               <span className="mrp">₹{product.mrp}</span>
               <span className="discount">({product.discountPercent}% off)</span>

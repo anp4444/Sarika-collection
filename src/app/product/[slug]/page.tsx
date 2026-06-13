@@ -23,6 +23,7 @@ export default function ProductDetailPage() {
     );
   }
 
+  const hasPrice = product.price > 0;
   const relatedProducts = getProductsByCategory(product.category)
     .filter((p) => p.id !== product.id)
     .slice(0, 4);
@@ -66,7 +67,7 @@ export default function ProductDetailPage() {
                 <span className="badge-bestseller px-4 py-1.5 rounded-full text-xs font-bold">BEST SELLER</span>
               )}
             </div>
-            {product.discountPercent > 0 && (
+            {hasPrice && product.discountPercent > 0 && (
               <span className="badge-discount absolute top-4 right-4 px-4 py-1.5 rounded-full text-sm font-bold">
                 {product.discountPercent}% OFF
               </span>
@@ -93,8 +94,8 @@ export default function ProductDetailPage() {
 
             {/* Price */}
             <div className="flex items-baseline flex-wrap gap-3 mb-6">
-              <span className="text-3xl font-bold text-[#941424]">₹{product.price}</span>
-              {product.mrp > product.price && (
+              <span className="text-3xl font-bold text-[#941424]">{hasPrice ? `₹${product.price}` : 'Ask for price'}</span>
+              {hasPrice && product.mrp > product.price && (
                 <>
                   <span className="text-lg text-gray-400 line-through">₹{product.mrp}</span>
                   <span className="text-sm font-semibold text-green-600 bg-green-50 px-3 py-1 rounded-full">
@@ -159,7 +160,7 @@ export default function ProductDetailPage() {
                     <Plus size={18} />
                   </button>
                 </div>
-                <span className="text-sm text-gray-500 ml-2">₹{product.price} each</span>
+                {hasPrice && <span className="text-sm text-gray-500 ml-2">₹{product.price} each</span>}
               </div>
             </div>
 
