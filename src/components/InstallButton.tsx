@@ -3,29 +3,39 @@
 import { useEffect, useState, useRef } from 'react';
 import { Download } from 'lucide-react';
 
+type BeforeInstallPromptEvent = Event & {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed'; platform: string }>;
+};
+
+type NavigatorWithStandalone = Navigator & {
+  standalone?: boolean;
+};
+
 export default function InstallButton() {
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isInstalled, setIsInstalled] = useState(false);
   const [showTip, setShowTip] = useState(false);
   const tipRef = useRef<ReturnType<typeof setTimeout>>(null);
 
   useEffect(() => {
-    if (window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone) {
-      setIsInstalled(true);
-      return;
-    }
+    const standalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as NavigatorWithStandalone).standalone;
+    const installCheck = window.setTimeout(() => setIsInstalled(Boolean(standalone)), 0);
     const handler = (e: Event) => {
       e.preventDefault();
-      setDeferredPrompt(e);
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
     };
     window.addEventListener('beforeinstallprompt', handler);
-    return () => window.removeEventListener('beforeinstallprompt', handler);
+    return () => {
+      window.clearTimeout(installCheck);
+      window.removeEventListener('beforeinstallprompt', handler);
+    };
   }, []);
 
   const handleInstall = async () => {
     if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const result = await deferredPrompt.userChoice;
+      await deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
       setDeferredPrompt(null);
     } else {
       setShowTip(true);

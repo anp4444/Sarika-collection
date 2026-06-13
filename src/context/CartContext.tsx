@@ -48,9 +48,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const hydrated = useRef(false);
 
   useEffect(() => {
-    hydrated.current = true;
-    const stored = loadItems();
-    if (stored.length) setItems(stored);
+    const id = window.setTimeout(() => {
+      hydrated.current = true;
+      const stored = loadItems();
+      if (stored.length) setItems(stored);
+    }, 0);
+    return () => window.clearTimeout(id);
   }, []);
 
   const showToast = useCallback((message: string) => {
