@@ -39,13 +39,6 @@ body {
   }
 }
 
-.no-scrollbar {
-  scrollbar-width: none;
-}
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
 /* Brand gradient */
 .brand-gradient {
   background: linear-gradient(135deg, #941424 0%, #2D1810 100%);

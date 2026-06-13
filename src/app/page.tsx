@@ -284,10 +284,10 @@ export default function HomePage() {
               Rakshabandhan Special 2026
             </p>
             <h1 className="max-w-3xl text-3xl font-black leading-[1.05] text-[#291511] md:text-6xl lg:text-7xl">
-              Celebrate every bond with rakhis that feel personal.
+              Fresh festive picks for every family celebration.
             </h1>
             <p className="mt-4 max-w-2xl text-sm leading-6 text-[#6e5147] md:mt-5 md:text-lg md:leading-7">
-              Shop curated rakhis, bhai-bhabhi pairs, kids favourites, festive gifts and pooja essentials from Sarika Collection.
+              Explore rakhis, bhai-bhabhi pairs, kids favourites, festive gifts and everyday finds from Sarika Collection.
             </p>
 
             <div className="mt-6 grid grid-cols-2 gap-3 md:mt-8 md:flex md:flex-wrap">
