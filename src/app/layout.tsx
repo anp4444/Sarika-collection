@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
 import PwaRegister from '@/components/PwaRegister';
 import MobileBottomNav from '@/components/MobileBottomNav';
+import MobileCategoryBar from '@/components/MobileCategoryBar';
 import { CartProvider } from '@/context/CartContext';
 
 export const metadata: Metadata = {
@@ -31,7 +32,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen flex flex-col">
         <CartProvider>
           <Header />
-          <main className="flex-1">{children}</main>
+          <MobileCategoryBar />
+          <main className="flex-1 pt-[58px] md:pt-0">{children}</main>
           <Footer />
           <WhatsAppFloat />
           <MobileBottomNav />

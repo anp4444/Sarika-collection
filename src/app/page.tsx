@@ -357,24 +357,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Sticky Category Bar - Mobile */}
-      <div className="sticky top-16 z-40 border-b border-[#e3d5c6] bg-white shadow-sm md:hidden">
-        <div className="overflow-x-auto px-4 py-2.5">
-          <div className="flex gap-2">
-            {categories.map((cat) => (
-              <Link
-                key={cat.slug}
-                href={`/category/${cat.slug}`}
-                className="flex shrink-0 items-center gap-1.5 rounded-full border border-[#e3d5c6] bg-[#fffaf4] px-3.5 py-2 text-xs font-bold text-[#3b1c17] transition hover:border-[#941424] hover:text-[#941424]"
-              >
-                <span className="text-sm">{cat.icon}</span>
-                {cat.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
-
       <MobileDiscovery
         query={query}
         setQuery={setQuery}
