@@ -23,7 +23,7 @@ export default function MobileBottomNav() {
   return (
     <>
       {categoriesOpen && (
-        <div className="fixed inset-x-0 bottom-[82px] z-[85] px-3 pb-3 md:hidden">
+        <div className="fixed inset-x-0 bottom-[82px] z-[9998] px-3 pb-3">
           <button
             type="button"
             aria-label="Close categories"
@@ -71,7 +71,7 @@ export default function MobileBottomNav() {
         </div>
       )}
 
-      <nav className="fixed inset-x-0 bottom-0 z-[90] border-t border-[#e3d5c6] bg-white/96 px-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 shadow-[0_-14px_35px_rgba(60,30,12,0.12)] backdrop-blur md:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-[9999] border-t border-[#e3d5c6] bg-white/96 px-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 shadow-[0_-14px_35px_rgba(60,30,12,0.12)] backdrop-blur">
         <div className="mx-auto flex max-w-md gap-1">
           <Link href="/" onClick={() => setCategoriesOpen(false)} className={itemClass(pathname === '/')}>
             <Home size={20} />
