@@ -1,7 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
-import { Trash2, Minus, Plus, ShoppingBag, ArrowLeft } from 'lucide-react';
+import { Trash2, Minus, Plus, ShoppingBag, ArrowLeft, MessageCircle } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 
 const WA_NUMBER = '919422703807';
@@ -10,10 +11,16 @@ const priceText = (price: number) => (price > 0 ? `₹${price}` : 'Ask for price
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, clearCart, subtotal, totalItems } = useCart();
+  const [customerName, setCustomerName] = useState('');
+  const [deliveryNote, setDeliveryNote] = useState('');
 
   const totalMrp = items.reduce((sum, i) => sum + i.mrp * i.quantity, 0);
   const totalDiscount = totalMrp - subtotal;
   const hasAskPriceItems = items.some((i) => i.price <= 0);
+  const customerDetails = [
+    customerName.trim() ? `Name: ${customerName.trim()}` : '',
+    deliveryNote.trim() ? `Delivery note/address: ${deliveryNote.trim()}` : '',
+  ].filter(Boolean).join('\n');
 
   const waMessage = encodeURIComponent(
     `Hello Sarika Collection!\n\nI would like to place an order:\n\n${items
@@ -21,7 +28,7 @@ export default function CartPage() {
         const lineTotal = i.price > 0 ? ` = ₹${i.price * i.quantity}` : '';
         return `${idx + 1}. ${i.name} - ${priceText(i.price)} x ${i.quantity}${lineTotal}`;
       })
-      .join('\n')}\n\nTotal Items: ${totalItems}\nSubtotal: ₹${subtotal}${
+      .join('\n')}${customerDetails ? `\n\nCustomer Details:\n${customerDetails}` : ''}\n\nTotal Items: ${totalItems}\nSubtotal: ₹${subtotal}${
       hasAskPriceItems ? '\nSome items need price confirmation.' : ''
     }\nTotal Savings: ₹${totalDiscount}\n\nPlease confirm the order. Thank you!`
   );
@@ -35,7 +42,7 @@ export default function CartPage() {
         <p className="text-gray-500 mb-6">Start adding products to your cart!</p>
         <Link
           href="/"
-          className="inline-flex items-center gap-2 bg-[#941424] hover:bg-[#6b0e1a] text-white px-6 py-3 rounded-xl font-semibold transition-all"
+          className="inline-flex min-h-[48px] items-center gap-2 bg-[#941424] hover:bg-[#6b0e1a] text-white px-6 py-3 rounded-xl font-semibold transition-all"
         >
           <ArrowLeft size={18} /> Continue Shopping
         </Link>
@@ -46,7 +53,7 @@ export default function CartPage() {
   return (
     <>
       <div className="bg-[#fbf4ea] border-b border-[#e3d5c6]">
-        <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto px-4 py-6 md:py-8">
           <h1 className="text-2xl md:text-3xl font-bold text-[#3b1c17]">Your Cart</h1>
           <p className="text-[#785c52] text-sm mt-1">
             {totalItems} item{totalItems > 1 ? 's' : ''} in your cart
@@ -54,16 +61,16 @@ export default function CartPage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="grid lg:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto px-4 py-6 pb-40 md:py-8 md:pb-8">
+        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
           <div className="lg:col-span-2 space-y-4">
             {items.map((item) => (
-              <div key={item.slug} className="bg-white rounded-2xl border border-[#e3d5c6] p-4 flex gap-4">
+              <div key={item.slug} className="bg-white rounded-2xl border border-[#e3d5c6] p-3 sm:p-4 flex gap-3 sm:gap-4">
                 <Link href={`/product/${item.slug}`} className="flex-shrink-0">
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-24 h-24 md:w-28 md:h-28 object-cover rounded-xl"
+                    className="w-24 h-28 md:w-28 md:h-28 object-cover rounded-xl"
                   />
                 </Link>
                 <div className="flex-1 min-w-0">
@@ -78,34 +85,37 @@ export default function CartPage() {
                       <span className="text-xs text-gray-400 line-through">₹{item.mrp}</span>
                     )}
                   </div>
-                  <div className="flex items-center justify-between mt-3">
+                  <div className="flex items-end justify-between gap-2 mt-3">
                     <div className="flex items-center gap-2">
                       <button
                         type="button"
                         onClick={() => updateQuantity(item.slug, item.quantity - 1)}
-                        className="w-8 h-8 flex items-center justify-center rounded-lg border border-[#e3d5c6] text-[#3b1c17] hover:bg-[#f4e6d2] transition-colors active:scale-90"
+                        className="w-10 h-10 flex items-center justify-center rounded-lg border border-[#e3d5c6] text-[#3b1c17] hover:bg-[#f4e6d2] transition-colors active:scale-90"
+                        aria-label="Decrease quantity"
                       >
-                        <Minus size={14} />
+                        <Minus size={16} />
                       </button>
                       <span className="w-8 text-center font-semibold text-sm">{item.quantity}</span>
                       <button
                         type="button"
                         onClick={() => updateQuantity(item.slug, item.quantity + 1)}
-                        className="w-8 h-8 flex items-center justify-center rounded-lg border border-[#e3d5c6] text-[#3b1c17] hover:bg-[#f4e6d2] transition-colors active:scale-90"
+                        className="w-10 h-10 flex items-center justify-center rounded-lg border border-[#e3d5c6] text-[#3b1c17] hover:bg-[#f4e6d2] transition-colors active:scale-90"
+                        aria-label="Increase quantity"
                       >
-                        <Plus size={14} />
+                        <Plus size={16} />
                       </button>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-col items-end gap-2">
                       <span className="font-bold text-[#3b1c17] text-sm">
                         {item.price > 0 ? `₹${item.price * item.quantity}` : 'Confirm price'}
                       </span>
                       <button
                         type="button"
                         onClick={() => removeItem(item.slug)}
-                        className="p-1.5 text-gray-400 hover:text-red-500 transition-colors"
+                        className="flex h-10 w-10 items-center justify-center rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+                        aria-label="Remove item"
                       >
-                        <Trash2 size={16} />
+                        <Trash2 size={17} />
                       </button>
                     </div>
                   </div>
@@ -115,14 +125,14 @@ export default function CartPage() {
             <button
               type="button"
               onClick={clearCart}
-              className="text-sm text-gray-400 hover:text-red-500 transition-colors"
+              className="min-h-[44px] text-sm text-gray-400 hover:text-red-500 transition-colors"
             >
               Clear cart
             </button>
           </div>
 
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-2xl border border-[#e3d5c6] p-6 sticky top-24">
+            <div className="bg-white rounded-2xl border border-[#e3d5c6] p-5 sm:p-6 sticky top-24">
               <h2 className="font-bold text-[#3b1c17] text-lg mb-4">Order Summary</h2>
 
               <div className="space-y-3 text-sm">
@@ -152,15 +162,35 @@ export default function CartPage() {
                 </div>
               </div>
 
+              <div className="mt-5 space-y-3">
+                <label className="block">
+                  <span className="mb-1 block text-xs font-bold uppercase tracking-[0.12em] text-[#785c52]">Name</span>
+                  <input
+                    value={customerName}
+                    onChange={(event) => setCustomerName(event.target.value)}
+                    placeholder="Your name"
+                    className="min-h-[48px] w-full rounded-xl border border-[#e3d5c6] bg-[#fffaf4] px-3 text-[16px] outline-none focus:border-[#941424]"
+                  />
+                </label>
+                <label className="block">
+                  <span className="mb-1 block text-xs font-bold uppercase tracking-[0.12em] text-[#785c52]">Address / note</span>
+                  <textarea
+                    value={deliveryNote}
+                    onChange={(event) => setDeliveryNote(event.target.value)}
+                    placeholder="Delivery address, pickup note, or question"
+                    rows={3}
+                    className="w-full resize-none rounded-xl border border-[#e3d5c6] bg-[#fffaf4] px-3 py-3 text-[16px] outline-none focus:border-[#941424]"
+                  />
+                </label>
+              </div>
+
               <a
                 href={waUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-6 w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1DA851] text-white font-semibold py-3 px-4 rounded-xl transition-all text-sm"
+                className="mt-6 w-full flex min-h-[50px] items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1DA851] text-white font-semibold py-3 px-4 rounded-xl transition-all text-sm"
               >
-                <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                </svg>
+                <MessageCircle size={18} />
                 Order on WhatsApp
               </a>
 
@@ -170,12 +200,29 @@ export default function CartPage() {
 
               <Link
                 href="/"
-                className="mt-4 w-full flex items-center justify-center gap-1 text-[#941424] hover:text-[#6b0e1a] font-medium text-sm transition-colors"
+                className="mt-4 w-full flex min-h-[44px] items-center justify-center gap-1 text-[#941424] hover:text-[#6b0e1a] font-medium text-sm transition-colors"
               >
                 <ArrowLeft size={14} /> Continue Shopping
               </Link>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="fixed inset-x-0 bottom-[82px] z-40 border-t border-[#e3d5c6] bg-white/95 px-4 py-3 shadow-[0_-14px_35px_rgba(60,30,12,0.12)] backdrop-blur md:hidden">
+        <div className="mx-auto flex max-w-md items-center gap-3">
+          <div className="min-w-0 flex-1">
+            <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#785c52]">{totalItems} item{totalItems > 1 ? 's' : ''}</p>
+            <p className="text-lg font-black text-[#3b1c17]">₹{subtotal}</p>
+          </div>
+          <a
+            href={waUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex min-h-[50px] shrink-0 items-center justify-center rounded-xl bg-[#25D366] px-5 text-sm font-black text-white"
+          >
+            Send on WhatsApp
+          </a>
         </div>
       </div>
     </>

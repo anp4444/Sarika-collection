@@ -39,7 +39,7 @@ export default function RakhiPage() {
                   <div key={p.id} className="group bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-amber-100/50">
                     <Link href={`/product/${p.slug}`}>
                       <div className="relative overflow-hidden">
-                        <img src={p.images[0]} alt={p.name} className="w-full h-20 sm:h-52 object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <img src={p.images[0]} alt={p.name} className="aspect-[4/5] w-full object-cover group-hover:scale-105 transition-transform duration-500 sm:h-52 sm:aspect-auto" />
                       </div>
                     </Link>
                     <div className="p-1.5 sm:p-4">

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Star, CheckCircle, Minus, Plus, Truck, Shield, RefreshCw } from 'lucide-react';
+import { ArrowLeft, Star, CheckCircle, Minus, Plus, Truck, Shield, RefreshCw, MessageCircle } from 'lucide-react';
 import { getProductsByCategory } from '@/data/products';
 import ProductCard from '@/components/ProductCard';
 import AddToCartButton from '@/components/AddToCartButton';
@@ -11,6 +11,7 @@ import type { Product } from '@/types';
 export default function ProductDetailClient({ product }: { product: Product }) {
   const [qty, setQty] = useState(1);
   const hasPrice = product.price > 0;
+  const waUrl = `https://wa.me/919422703807?text=${encodeURIComponent(`Hi Sarika Collection! I want to know more about ${product.name}.`)}`;
   const relatedProducts = getProductsByCategory(product.category)
     .filter((p) => p.id !== product.id)
     .slice(0, 4);
@@ -151,7 +152,18 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               </div>
             </div>
 
-            <AddToCartButton product={product} qty={qty} className="py-3.5 text-base shadow-md" />
+            <div className="grid gap-3 sm:grid-cols-2">
+              <AddToCartButton product={product} qty={qty} className="py-3.5 text-base shadow-md" />
+              <a
+                href={waUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex min-h-[52px] items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-3.5 text-base font-bold text-white shadow-md transition hover:bg-[#1DA851]"
+              >
+                <MessageCircle size={18} />
+                Ask on WhatsApp
+              </a>
+            </div>
 
             <p className="text-xs text-gray-400 text-center mt-3 mb-6">
               Added items will be saved in your cart. When ready, review and send your order on WhatsApp from the cart page.
@@ -188,6 +200,23 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           </div>
         </div>
       )}
+
+      <div className="h-24 md:hidden" />
+
+      <div className="fixed inset-x-0 bottom-[82px] z-40 border-t border-[#e3d5c6] bg-white/95 px-4 py-3 shadow-[0_-14px_35px_rgba(60,30,12,0.12)] backdrop-blur md:hidden">
+        <div className="mx-auto grid max-w-md grid-cols-2 gap-2">
+          <AddToCartButton product={product} qty={qty} className="min-h-[48px] py-2 text-sm shadow-sm" />
+          <a
+            href={waUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-[#25D366] px-3 py-2 text-sm font-bold text-white"
+          >
+            <MessageCircle size={17} />
+            Ask
+          </a>
+        </div>
+      </div>
     </>
   );
 }

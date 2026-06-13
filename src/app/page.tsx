@@ -7,11 +7,13 @@ import {
   Heart,
   MessageCircle,
   PackageCheck,
+  Search,
   ShieldCheck,
   ShoppingBag,
   Sparkles,
   Star,
   Truck,
+  X,
 } from 'lucide-react';
 import AddToCartButton from '@/components/AddToCartButton';
 import { categories } from '@/data/categories';
@@ -28,6 +30,9 @@ const categoryImages: Record<string, string> = {
   'festive-items': '/images/products/WhatsApp Image 2026-06-13 at 2.51.35 PM.jpeg',
   'utility-items': '/images/products/WhatsApp Image 2026-06-13 at 2.51.34 PM (2).jpeg',
 };
+
+const productInquiryUrl = (product: Product) =>
+  `https://wa.me/919422703807?text=${encodeURIComponent(`Hi Sarika Collection! I want to know more about ${product.name}.`)}`;
 
 function useCountdown() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -93,10 +98,10 @@ function ProductTile({ product, featured = false }: { product: Product; featured
         <img
           src={product.images[0]}
           alt={product.name}
-          className={`w-full object-cover transition duration-700 group-hover:scale-105 ${featured ? 'h-full min-h-[320px]' : 'h-20 sm:h-64'}`}
+          className={`w-full object-cover transition duration-700 group-hover:scale-105 ${featured ? 'h-full min-h-[320px]' : 'h-36 sm:h-64'}`}
         />
       </Link>
-      <div className="p-2 md:p-5">
+      <div className="p-2.5 md:p-5">
         <div className="mb-1 sm:mb-3 flex items-center justify-between gap-3">
           <div className="flex items-center gap-1 text-[#d2912f]">
             <Star size={12} className="fill-current sm:size-[15px]" />
@@ -109,7 +114,7 @@ function ProductTile({ product, featured = false }: { product: Product; featured
           )}
         </div>
         <Link href={`/product/${product.slug}`}>
-          <h3 className="line-clamp-2 text-[11px] sm:text-base font-bold leading-tight sm:leading-snug text-[#2b1712] transition group-hover:text-[#941424]">
+          <h3 className="min-h-[36px] line-clamp-2 text-[12px] sm:text-base font-bold leading-tight sm:leading-snug text-[#2b1712] transition group-hover:text-[#941424]">
             {product.name}
           </h3>
         </Link>
@@ -119,7 +124,18 @@ function ProductTile({ product, featured = false }: { product: Product; featured
           {hasPrice && product.mrp > product.price && <span className="text-[10px] sm:text-sm font-medium text-[#a39187] line-through">₹{product.mrp}</span>}
         </div>
         <div className="mt-1 sm:mt-4">
-          <AddToCartButton product={product} className="py-1.5 sm:py-3 text-[10px] sm:text-sm shadow-[0_10px_24px_rgba(148,20,36,0.18)]" />
+          <AddToCartButton product={product} className="min-h-[44px] py-2 sm:py-3 text-xs sm:text-sm shadow-[0_10px_24px_rgba(148,20,36,0.18)]" />
+          {!hasPrice && (
+            <a
+              href={productInquiryUrl(product)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 flex min-h-[42px] items-center justify-center gap-1.5 rounded-xl bg-[#25D366] px-3 py-2 text-xs font-bold text-white"
+            >
+              <MessageCircle size={15} />
+              Ask on WhatsApp
+            </a>
+          )}
         </div>
       </div>
     </article>
@@ -128,7 +144,7 @@ function ProductTile({ product, featured = false }: { product: Product; featured
 
 function ProductRail({ products: railProducts }: { products: Product[] }) {
   return (
-    <div className="grid grid-cols-2 gap-2 sm:gap-5 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
       {railProducts.map((product) => (
         <ProductTile key={product.id} product={product} />
       ))}
@@ -136,8 +152,96 @@ function ProductRail({ products: railProducts }: { products: Product[] }) {
   );
 }
 
+function MobileDiscovery({
+  query,
+  setQuery,
+  activeCategory,
+  setActiveCategory,
+  results,
+}: {
+  query: string;
+  setQuery: (value: string) => void;
+  activeCategory: string;
+  setActiveCategory: (value: string) => void;
+  results: Product[];
+}) {
+  const hasFilter = query.trim() || activeCategory !== 'all';
+
+  return (
+    <section id="mobile-discovery" className="bg-white px-4 py-5 md:hidden">
+      <div className="mb-4">
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7832d]">Quick find</p>
+        <h2 className="mt-1 text-2xl font-black text-[#2b1712]">Search and shop faster</h2>
+      </div>
+
+      <label className="flex min-h-[52px] items-center gap-2 rounded-2xl border border-[#e3d5c6] bg-[#fffaf4] px-4 shadow-sm">
+        <Search size={19} className="text-[#8a6a5e]" />
+        <input
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Search rakhi, bag, bottle..."
+          className="min-w-0 flex-1 bg-transparent text-[16px] font-semibold text-[#2b1712] outline-none placeholder:text-[#a58b80]"
+        />
+        {query && (
+          <button type="button" onClick={() => setQuery('')} className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#7a5d52]">
+            <X size={17} />
+          </button>
+        )}
+      </label>
+
+      <div className="-mx-4 mt-4 overflow-x-auto px-4 pb-1">
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={() => setActiveCategory('all')}
+            className={`min-h-[42px] shrink-0 rounded-full px-4 text-sm font-bold ${activeCategory === 'all' ? 'bg-[#941424] text-white' : 'border border-[#e3d5c6] bg-white text-[#3b1c17]'}`}
+          >
+            All
+          </button>
+          {categories.map((category) => (
+            <button
+              key={category.slug}
+              type="button"
+              onClick={() => setActiveCategory(category.slug)}
+              className={`min-h-[42px] shrink-0 rounded-full px-4 text-sm font-bold ${activeCategory === category.slug ? 'bg-[#941424] text-white' : 'border border-[#e3d5c6] bg-white text-[#3b1c17]'}`}
+            >
+              {category.name}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-5 flex items-center justify-between">
+        <h3 className="text-sm font-black uppercase tracking-[0.12em] text-[#6d5146]">
+          {hasFilter ? `${results.length} result${results.length === 1 ? '' : 's'}` : 'Popular picks'}
+        </h3>
+        {hasFilter && (
+          <button
+            type="button"
+            onClick={() => {
+              setQuery('');
+              setActiveCategory('all');
+            }}
+            className="text-sm font-bold text-[#941424]"
+          >
+            Clear
+          </button>
+        )}
+      </div>
+
+      <div className="mt-3 grid grid-cols-2 gap-3">
+        {results.slice(0, 8).map((product) => (
+          <ProductTile key={product.id} product={product} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default function HomePage() {
   const timeLeft = useCountdown();
+  const [query, setQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState('all');
 
   const collections = useMemo(
     () => [
@@ -152,6 +256,20 @@ export default function HomePage() {
   const coupleRakhis = products.filter((p) => p.subcategory === 'couple-rakhi').slice(0, 4);
   const kidsRakhis = products.filter((p) => p.subcategory === 'kids-rakhi').slice(0, 4);
   const categoryCards = categories;
+  const mobileResults = useMemo(() => {
+    const term = query.trim().toLowerCase();
+
+    return products
+      .filter((product) => activeCategory === 'all' || product.category === activeCategory)
+      .filter((product) => {
+        if (!term) return true;
+        return [product.name, product.description, product.category, product.subcategory, ...product.features]
+          .join(' ')
+          .toLowerCase()
+          .includes(term);
+      })
+      .slice(0, 12);
+  }, [activeCategory, query]);
 
   return (
     <>
@@ -159,23 +277,23 @@ export default function HomePage() {
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_15%_10%,rgba(240,166,70,0.24),transparent_28%),radial-gradient(circle_at_86%_12%,rgba(148,20,36,0.16),transparent_24%),linear-gradient(135deg,#fff7ec_0%,#fffaf5_44%,#f8e1bf_100%)]" />
         <div className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-t from-white to-transparent" />
 
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 pb-14 pt-10 md:grid-cols-[0.95fr_1.05fr] md:items-center md:pb-20 md:pt-16">
+        <div className="mx-auto grid max-w-7xl gap-6 px-4 pb-8 pt-6 md:grid-cols-[0.95fr_1.05fr] md:items-center md:gap-10 md:pb-20 md:pt-16">
           <div>
-            <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#e7cfac] bg-white/75 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#8b6425] shadow-sm">
+            <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#e7cfac] bg-white/75 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#8b6425] shadow-sm md:mb-5 md:px-4 md:text-xs">
               <Sparkles size={14} />
               Rakshabandhan Special 2026
             </p>
-            <h1 className="max-w-3xl text-4xl font-black leading-[1.02] text-[#291511] md:text-6xl lg:text-7xl">
+            <h1 className="max-w-3xl text-3xl font-black leading-[1.05] text-[#291511] md:text-6xl lg:text-7xl">
               Celebrate every bond with rakhis that feel personal.
             </h1>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-[#6e5147] md:text-lg">
+            <p className="mt-4 max-w-2xl text-sm leading-6 text-[#6e5147] md:mt-5 md:text-lg md:leading-7">
               Shop curated rakhis, bhai-bhabhi pairs, kids favourites, festive gifts and pooja essentials from Sarika Collection.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-6 grid grid-cols-2 gap-3 md:mt-8 md:flex md:flex-wrap">
               <Link
                 href="/category/rakhi-gifts"
-                className="inline-flex items-center gap-2 rounded-full bg-[#941424] px-7 py-3.5 text-sm font-bold text-white shadow-[0_18px_36px_rgba(148,20,36,0.26)] transition hover:-translate-y-0.5 hover:bg-[#6b0e1a]"
+                className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-[#941424] px-4 py-3 text-sm font-bold text-white shadow-[0_18px_36px_rgba(148,20,36,0.26)] transition hover:-translate-y-0.5 hover:bg-[#6b0e1a] md:px-7 md:py-3.5"
               >
                 Shop collection
                 <ArrowRight size={17} />
@@ -184,10 +302,10 @@ export default function HomePage() {
                 href="https://wa.me/919422703807"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-[#d9c4a4] bg-white px-7 py-3.5 text-sm font-bold text-[#2b1712] shadow-sm transition hover:-translate-y-0.5 hover:border-[#941424]"
+                className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-[#d9c4a4] bg-white px-4 py-3 text-sm font-bold text-[#2b1712] shadow-sm transition hover:-translate-y-0.5 hover:border-[#941424] md:px-7 md:py-3.5"
               >
                 <MessageCircle size={17} />
-                Order on WhatsApp
+                WhatsApp
               </a>
             </div>
 
@@ -206,14 +324,14 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="relative min-h-[520px]">
+          <div className="relative min-h-[360px] md:min-h-[520px]">
             <div className="absolute left-0 top-8 hidden w-44 rounded-[1.5rem] border border-white/70 bg-white p-3 shadow-[0_24px_60px_rgba(60,28,12,0.16)] md:block">
               <div className="flex items-center gap-2 text-xs font-bold text-[#8a6a5e]">
                 <PackageCheck size={15} className="text-[#941424]" />
                 Packed with care
               </div>
             </div>
-            <div className="absolute right-2 top-0 h-72 w-56 overflow-hidden rounded-[2rem] border-[7px] border-white bg-white shadow-[0_30px_70px_rgba(70,28,12,0.18)] sm:right-12">
+            <div className="absolute right-2 top-0 h-52 w-40 overflow-hidden rounded-[1.5rem] border-[5px] border-white bg-white shadow-[0_30px_70px_rgba(70,28,12,0.18)] sm:right-12 md:h-72 md:w-56 md:rounded-[2rem] md:border-[7px]">
               <img src="/images/hero-rakhi.png" alt="Festive rakhi arrangement" className="h-full w-full object-cover" />
             </div>
             {collections.map((product, index) => (
@@ -222,10 +340,10 @@ export default function HomePage() {
                 href={`/product/${product.slug}`}
                 className={`absolute overflow-hidden rounded-[1.5rem] border-[7px] border-white bg-white shadow-[0_28px_70px_rgba(70,28,12,0.18)] transition hover:-translate-y-1 ${
                   index === 0
-                    ? 'bottom-8 left-0 h-64 w-[58%]'
+                    ? 'bottom-8 left-0 h-52 w-[58%] md:h-64'
                     : index === 1
-                      ? 'bottom-0 right-0 h-56 w-[48%]'
-                      : 'left-[30%] top-32 h-52 w-[42%]'
+                      ? 'bottom-0 right-0 h-44 w-[48%] md:h-56'
+                      : 'left-[30%] top-24 h-44 w-[42%] md:top-32 md:h-52'
                 }`}
               >
                 <img src={product.images[0]} alt={product.name} className="h-full w-full object-cover" />
@@ -238,6 +356,14 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <MobileDiscovery
+        query={query}
+        setQuery={setQuery}
+        activeCategory={activeCategory}
+        setActiveCategory={setActiveCategory}
+        results={mobileResults}
+      />
 
       <section className="bg-white py-5">
         <div className="mx-auto grid max-w-7xl gap-3 px-4 md:grid-cols-4">
