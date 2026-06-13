@@ -309,18 +309,26 @@ export default function HomePage() {
               </a>
             </div>
 
-            <div className="mt-9 grid max-w-xl grid-cols-4 gap-2 rounded-[1.4rem] border border-[#ead8bb] bg-white/70 p-2 shadow-[0_22px_60px_rgba(80,35,20,0.08)] backdrop-blur">
-              {[
-                { value: timeLeft.days, label: 'Days' },
-                { value: timeLeft.hours, label: 'Hours' },
-                { value: timeLeft.minutes, label: 'Mins' },
-                { value: timeLeft.seconds, label: 'Secs' },
-              ].map((item) => (
-                <div key={item.label} className="rounded-2xl bg-[#fff8ef] px-2 py-3 text-center">
-                  <div className="text-2xl font-black text-[#941424] md:text-3xl">{String(item.value).padStart(2, '0')}</div>
-                  <div className="mt-1 text-[11px] font-bold uppercase tracking-[0.12em] text-[#8d6d5e]">{item.label}</div>
-                </div>
-              ))}
+            <div className="mt-9 max-w-xl rounded-[1.4rem] border border-[#ead8bb] bg-white/70 p-3 shadow-[0_22px_60px_rgba(80,35,20,0.08)] backdrop-blur">
+              <div className="mb-3 px-1">
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-[#941424]">Rakhi countdown</p>
+                <p className="mt-1 text-sm font-semibold leading-5 text-[#6e5147]">
+                  Counting down to Raksha Bandhan 2026, so you can choose rakhis and gifts before the festive rush.
+                </p>
+              </div>
+              <div className="grid grid-cols-4 gap-2">
+                {[
+                  { value: timeLeft.days, label: 'Days' },
+                  { value: timeLeft.hours, label: 'Hours' },
+                  { value: timeLeft.minutes, label: 'Mins' },
+                  { value: timeLeft.seconds, label: 'Secs' },
+                ].map((item) => (
+                  <div key={item.label} className="rounded-2xl bg-[#fff8ef] px-2 py-3 text-center">
+                    <div className="text-2xl font-black text-[#941424] md:text-3xl">{String(item.value).padStart(2, '0')}</div>
+                    <div className="mt-1 text-[11px] font-bold uppercase tracking-[0.12em] text-[#8d6d5e]">{item.label}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
