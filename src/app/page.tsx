@@ -93,33 +93,33 @@ function ProductTile({ product, featured = false }: { product: Product; featured
         <img
           src={product.images[0]}
           alt={product.name}
-          className={`w-full object-cover transition duration-700 group-hover:scale-105 ${featured ? 'h-full min-h-[320px]' : 'h-56 sm:h-64'}`}
+          className={`w-full object-cover transition duration-700 group-hover:scale-105 ${featured ? 'h-full min-h-[320px]' : 'h-20 sm:h-64'}`}
         />
       </Link>
-      <div className="p-4 md:p-5">
-        <div className="mb-3 flex items-center justify-between gap-3">
+      <div className="p-2 md:p-5">
+        <div className="mb-1 sm:mb-3 flex items-center justify-between gap-3">
           <div className="flex items-center gap-1 text-[#d2912f]">
-            <Star size={15} className="fill-current" />
-            <span className="text-xs font-bold text-[#6d5146]">{product.rating}</span>
+            <Star size={12} className="fill-current sm:size-[15px]" />
+            <span className="text-[11px] sm:text-xs font-bold text-[#6d5146]">{product.rating}</span>
           </div>
           {hasPrice && product.discountPercent > 0 && (
-            <span className="rounded-full bg-[#edf8f1] px-3 py-1 text-[11px] font-bold text-[#087c43]">
+            <span className="rounded-full bg-[#edf8f1] px-1.5 sm:px-3 py-0.5 sm:py-1 text-[9px] sm:text-[11px] font-bold text-[#087c43]">
               {product.discountPercent}% off
             </span>
           )}
         </div>
         <Link href={`/product/${product.slug}`}>
-          <h3 className="line-clamp-2 text-base font-bold leading-snug text-[#2b1712] transition group-hover:text-[#941424]">
+          <h3 className="line-clamp-2 text-[11px] sm:text-base font-bold leading-tight sm:leading-snug text-[#2b1712] transition group-hover:text-[#941424]">
             {product.name}
           </h3>
         </Link>
-        <p className="mt-2 line-clamp-2 text-sm leading-6 text-[#7b6056]">{product.description}</p>
-        <div className="mt-4 flex flex-wrap items-baseline gap-2">
-          <span className="text-2xl font-black text-[#941424]">{hasPrice ? `₹${product.price}` : 'Ask for price'}</span>
-          {hasPrice && product.mrp > product.price && <span className="text-sm font-medium text-[#a39187] line-through">₹{product.mrp}</span>}
+        <p className="mt-0.5 sm:mt-2 line-clamp-2 text-[10px] sm:text-sm leading-4 sm:leading-6 text-[#7b6056] hidden sm:block">{product.description}</p>
+        <div className="mt-1 sm:mt-4 flex flex-wrap items-baseline gap-1 sm:gap-2">
+          <span className="text-sm sm:text-2xl font-black text-[#941424]">{hasPrice ? `₹${product.price}` : 'Ask for price'}</span>
+          {hasPrice && product.mrp > product.price && <span className="text-[10px] sm:text-sm font-medium text-[#a39187] line-through">₹{product.mrp}</span>}
         </div>
-        <div className="mt-4">
-          <AddToCartButton product={product} className="py-3 text-sm shadow-[0_10px_24px_rgba(148,20,36,0.18)]" />
+        <div className="mt-1 sm:mt-4">
+          <AddToCartButton product={product} className="py-1.5 sm:py-3 text-[10px] sm:text-sm shadow-[0_10px_24px_rgba(148,20,36,0.18)]" />
         </div>
       </div>
     </article>
@@ -128,7 +128,7 @@ function ProductTile({ product, featured = false }: { product: Product; featured
 
 function ProductRail({ products: railProducts }: { products: Product[] }) {
   return (
-    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-2 sm:gap-5 lg:grid-cols-4">
       {railProducts.map((product) => (
         <ProductTile key={product.id} product={product} />
       ))}
@@ -387,6 +387,7 @@ export default function HomePage() {
           </a>
         </div>
       </section>
+
     </>
   );
 }
